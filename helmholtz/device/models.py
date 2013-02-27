@@ -220,7 +220,7 @@ class Setup( models.Model ):
     label = models.CharField( max_length=30, null=True, blank=True )
     place = models.ForeignKey( ScientificStructure )
     room = models.CharField( max_length=16, null=True, blank=True )
-    subsystems = models.ManyToManyField( SubSystem )
+    subsystems = models.ManyToManyField( SubSystem, null=True, blank=True )
     
     def __unicode__(self):
         return u"%s \u2192 %s" % (self.place, self.room)

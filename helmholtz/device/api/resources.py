@@ -117,7 +117,7 @@ class SubSystemResource( ModelResource ) :
 
 class SetupResource( ModelResource ) :
     place = fields.ForeignKey( ScientificStructureResource, 'place' )
-    subsystems = fields.ToManyField( SubSystemResource, 'subsystems' )
+    subsystems = fields.ToManyField( SubSystemResource, 'subsystems', null=True )
     class Meta:
         queryset = Setup.objects.all()
         resource_name = 'setup'

@@ -18,8 +18,8 @@ from helmholtz.people.api.resources import SupplierResource
 
 # Resources
 class AnimalResource( ModelResource ) :
-    strain = fields.ForeignKey( StrainResource, 'strain' )
-    supplier = fields.ForeignKey( SupplierResource, 'supplier' )
+    strain = fields.ForeignKey( StrainResource, 'strain', null=True )
+    supplier = fields.ForeignKey( SupplierResource, 'supplier', null=True )
     class Meta:
         queryset = Animal.objects.all()
         resource_name = 'animal'
@@ -34,8 +34,8 @@ class AnimalResource( ModelResource ) :
 
 
 class PreparationResource( ModelResource ) :
-    animal = fields.ForeignKey( AnimalResource, 'animal' )
-    device = fields.ForeignKey( DeviceResource, 'device', null=True )
+    animal = fields.ForeignKey( AnimalResource, 'animal', null=True )
+    equipment = fields.ForeignKey( DeviceResource, 'equipment', null=True )
     cutting_solution = fields.ForeignKey( SolutionResource, 'cutting_solution', null=True )
     bath_solution = fields.ForeignKey( SolutionResource, 'bath_solution', null=True )
     class Meta:

@@ -17,7 +17,7 @@ animals living in a laboratory and used for experimentation.
 
 class Animal( models.Model ) :
     """Animal that is the subject of an :class:`Experiment`."""
-    strain = models.ForeignKey( Strain )
+    strain = models.ForeignKey( Strain, null=True )
     identifier = models.CharField( max_length=15, null=True, blank=True )
     nickname = models.CharField( max_length=15, null=True, blank=True )
     sex = models.CharField( max_length=1, choices=(('M', 'male'), ('F', 'female')), null=True, blank=True )
@@ -97,10 +97,10 @@ preparations = (
 )
 class Preparation( models.Model ):
     """The subject of an :class:`Experiment`."""
-    animal = models.ForeignKey( Animal )
+    animal = models.ForeignKey( Animal, null=True, blank=True )
     type = models.CharField( max_length=16, choices=preparations, null=True, blank=True, verbose_name="types of preparation" )
     protocol = models.TextField( null=True, blank=True )   
-    device = models.ForeignKey( Device, null=True, blank=True )
+    equipment = models.ForeignKey( Device, null=True, blank=True )
     model_description = models.TextField( null=True, blank=True ) # simulation
     thickness = models.FloatField( null=True ) # microm &mu;m
     cut_orientation = models.CharField( max_length=50, null=True, blank=True )

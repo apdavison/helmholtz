@@ -3,10 +3,10 @@ from django.db import models
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 
-#from helmholtz.neuralstructures import CellType
-#from helmholtz.neuralstructures import Cell
-#from helmholtz.stimulation import Stimulus
-
+#from helmholtz.neuralstructures.models import CellType
+#from helmholtz.neuralstructures.models import Cell
+#from helmholtz.stimulation.models import Stimulus
+from helmholtz.storage.models import File
 
 class DataSource( models.Model ):
     """
@@ -35,4 +35,14 @@ class Step( models.Model ):
         st = "%s producing %s" % ( self.algorithm, self.outputs )
         if self.inputs :
             st += " applied on $s" % ( self.input )
+        return st
+
+
+class Image( models.Model ):
+    generator = models.ForeignKey( Step, null=True, blank=True )
+    file = models.ForeignKey( File, null=True, blank=True )
+    caption = models.TextField( null=True, blank=True )
+    
+    def __unicode__(self):
+        st = "%s (algorithm: %s) [file:%s]" % ( self.caption, self.generator.algorithm, self.file.location )
         return st

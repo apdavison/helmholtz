@@ -1,49 +1,10 @@
 #encoding:utf-8
-import re
-from django.core.exceptions import ValidationError
-from django.db.models.base import ModelBase
 from django.db import models
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
-from helmholtz.core.models import Cast
+
 from helmholtz.units.models import Unit
 
-def is_range(value):
-    regexp = "^(\[|\])\-{0,1}\d+(\.\d+){0,1}:\-{0,1}\d+(\.\d+){0,1}:\-{0,1}\d+(\.\d+){0,1}(\]|\[)$"
-    match = re.match(regexp, value, re.UNICODE)
-    if match :
-        return True
-    else :
-        return False
-
-def get_start_end_step(range):
-    "Return start, end and step of the specified range"
-    interval = range[1:-1].split(':')
-    return interval[0], interval[2], interval[1]
-
-def get_evaluations(start, end, step, tp=float):
-    return tp(start), tp(end), tp(step)
-
-def verify_pattern(pattern):
-    """Verify if the specified pattern is correctly defined."""
-    regexp = "^(((\[|\])\-{0,1}\d+(\.\d+){0,1}:\-{0,1}\d+(\.\d+){0,1}:\-{0,1}\d+(\.\d+){0,1}(\[|\]))|\w+|\w+(\.\w+)|(\-{0,1}\d+(\.\d+)))((\|(((\[|\])\-{0,1}\d+(\.\d+){0,1}:\-{0,1}\d+(\.\d+){0,1}:\-{0,1}\d+(\.\d+){0,1}(\[|\]))|\w+|(\-{0,1}\d+(\.\d+))))*)$"
-    match = re.match(regexp, pattern, re.UNICODE)
-    if not match :
-        raise ValidationError("bad pattern format")   
-    else :
-        n = 1
-        for single_pattern in pattern.split('|') :
-            if is_range(single_pattern) :
-                start, end, step = get_start_end_step(single_pattern)
-                f_start, f_end, f_step = get_evaluations(start, end, step)
-                #as pattern is a range, step cannot be zero
-                if not (f_step < 0 or f_step > 0) :
-                    raise ValidationError("bad range format, step value of pattern number %s cannot be zero" % n) 
-                #verify that lower and upper bound are coherent with the specified step
-                if ((f_step >= 0) and (f_start > f_end)) or ((f_step < 0) and (f_end > f_start)) :
-                    raise ValidationError("bad range format, pattern number %s would be [%s:%s:%s]" % (n, end, step, start))
-                n += 1
-                    
 
 
 choices = (('I', 'integer'), ('F', 'float'), ('S', 'string'), ('B', 'boolean'))

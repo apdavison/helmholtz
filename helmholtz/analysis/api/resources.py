@@ -8,6 +8,7 @@ from tastypie.contrib.contenttypes.fields import GenericForeignKeyField
 
 from helmholtz.analysis.models import DataSource
 from helmholtz.analysis.models import Step
+from helmholtz.analysis.models import Image
 from helmholtz.recording.models import ContinuousSignal
 from helmholtz.recording.models import DiscreteSignal
 # allowed resources
@@ -42,6 +43,21 @@ class StepResource( ModelResource ) :
             'inputs' : ALL_WITH_RELATIONS,
             'outputs' : ALL_WITH_RELATIONS,
             'algorithm' : ALL,
+        }
+        authentication = BasicAuthentication()
+        authorization = DjangoAuthorization()
+        allowed_methods = [ 'get', 'post', 'put', 'delete', 'patch' ]
+
+
+class ImageResource( ModelResource ) :
+    generator = fields.ForeignKey( StepResource, 'generator', null=True )
+    class Meta:
+        queryset = Image.objects.all()
+        resource_name = 'image'
+        filtering = {
+            'generator' : ALL_WITH_RELATIONS,
+            'file' : ALL_WITH_RELATIONS,
+            'caption' : ALL,
         }
         authentication = BasicAuthentication()
         authorization = DjangoAuthorization()
