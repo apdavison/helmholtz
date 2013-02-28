@@ -6,8 +6,10 @@ from tastypie.resources import ModelResource, ALL, ALL_WITH_RELATIONS
 from tastypie import fields
 
 from helmholtz.stimulation.models import StimulationType
+from helmholtz.stimulation.models import Stimulus
 from helmholtz.stimulation.models import SpikeStimulus
 from helmholtz.stimulation.models import DriftingGratingStimulus
+from helmholtz.stimulation.models import MultiStimulus
 
 # Allowed resources
 from helmholtz.device.api.resources import DeviceResource
@@ -20,6 +22,22 @@ class StimulationTypeResource( ModelResource ) :
         resource_name = 'stimulationtype'
         filtering = {
             'name': ALL,
+        }
+        allowed_methods = [ 'get', 'post', 'put', 'delete', 'patch' ]
+        authentication = BasicAuthentication()
+        authorization = DjangoAuthorization()
+
+
+class StimulusResource( ModelResource ) :
+    stimulation_type = fields.ForeignKey( StimulationTypeResource, 'stimulation_type', null=True, full=True )
+    stimulus_generator = fields.ForeignKey( DeviceResource, 'stimulus_generator', null=True )
+    class Meta:
+        queryset = Stimulus.objects.all()
+        resource_name = 'stimulus'
+        filtering = {
+            'label': ALL,
+            'stimulation_type': ALL_WITH_RELATIONS,
+            'stimulus_generator': ALL_WITH_RELATIONS,
         }
         allowed_methods = [ 'get', 'post', 'put', 'delete', 'patch' ]
         authentication = BasicAuthentication()
@@ -40,6 +58,30 @@ class SpikeStimulusResource( ModelResource ) :
         allowed_methods = [ 'get', 'post', 'put', 'delete', 'patch' ]
         authentication = BasicAuthentication()
         authorization = DjangoAuthorization()
+
+
+class MultiStimulusResource( ModelResource ) :
+    stimulation_type = fields.ForeignKey( StimulationTypeResource, 'stimulation_type', null=True, full=True )
+    stimulus_generator = fields.ForeignKey( DeviceResource, 'stimulus_generator', null=True )
+
+    def dehydrate( self, bundle ):
+        for key in bundle.data.keys() :
+            if bundle.data[key] is None :
+                bundle.data.pop( key )
+        return bundle
+
+    class Meta:
+        queryset = MultiStimulus.objects.all()
+        resource_name = 'multistimulus'
+        filtering = {
+            'label': ALL,
+            'stimulation_type': ALL_WITH_RELATIONS,
+            'stimulus_generator': ALL_WITH_RELATIONS,
+        }
+        allowed_methods = [ 'get', 'post', 'put', 'delete', 'patch' ]
+        authentication = BasicAuthentication()
+        authorization = DjangoAuthorization()
+
 
 
 class DriftingGratingStimulusResource( ModelResource ) :

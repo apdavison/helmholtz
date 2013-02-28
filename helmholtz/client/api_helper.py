@@ -45,7 +45,7 @@ class dataImporter( ) :
         return uri
 
     # importer of recording data via Neo
-    def importRecordingFile( self, cls, filename, experiment="1", recordingblock="1" ) :
+    def importRecordingFile( self, cls, filename, experiment, recordingblock, location, stimulus, mimetype ) :
         self.neoClass = cls
         # if the experiment exists attach to it, otherwise complain
         exp_uri = '/experiment/experiment/'+experiment+'/'
@@ -56,16 +56,16 @@ class dataImporter( ) :
         # open the file using supplied class reference (ex: neo.io.elphyio)
         ef = self.neoClass( filename=filename )
         # resources before file creation should be already there, maybe another function?
-        data = json.dumps({"name":filename,"location":"/storage/filelocation/1/","mimetype":"/storage/mimetype/pdf/"})
+        data = json.dumps( { "name":filename, "location":location, "mimetype":mimetype } )
         file_uri = self.post_resource( 'http://'+self.ip+'/storage/file/', data )
         # read block -> create helmholtz protocolrecording
         block = ef.read_block( lazy=False, cascade=True )
-        self.importNeoStruct( block, blk_uri, file_uri )
+        self.importNeoStruct( block, blk_uri, file_uri, stimulus )
 
     # importer of recording data via Neo
-    def importNeoStruct( self, block, blk_uri, file_uri ) :
+    def importNeoStruct( self, block, blk_uri, file_uri, stim_uri ) :
         # create protocol recording
-        data = json.dumps( { 'block':blk_uri, 'name':'protocol recording '+str(block.name), 'file':file_uri } )
+        data = json.dumps( { 'block':blk_uri, 'name':'protocol recording '+str(block.name), 'file':file_uri, 'stimulus':stim_uri } )
         prot_uri = self.post_resource( 'http://'+self.ip+'/recording/protocolrecording/', data )
         # read segments -> create helmholtz segments
         for segment in block.segments :

@@ -90,7 +90,8 @@ class Animal( models.Model ) :
 
 
 preparations = (
-    ( 'IN-VIVO', 'in vivo' ),
+    ( 'IN-VIVO-SHARP', 'in vivo sharp' ),
+    ( 'IN-VIVO-PATCH', 'in vivo patch' ),
     ( 'IN-VITRO-CULTURE', 'in vitro culture' ),
     ( 'IN-VITRO-SLICE', 'in vitro slice' ),
     ( 'IN-SILICO', 'in silico' )

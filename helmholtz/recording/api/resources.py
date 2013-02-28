@@ -15,7 +15,7 @@ from helmholtz.recording.models import RecordingChannel
 # Allowed resources
 from helmholtz.experiment.api.resources import ExperimentResource
 from helmholtz.device.api.resources import DevicePropertiesResource
-from helmholtz.stimulation.api.resources import SpikeStimulusResource
+from helmholtz.stimulation.api.resources import StimulusResource
 from helmholtz.storage.api.resources import FileResource
 
 
@@ -39,7 +39,7 @@ class RecordingBlockResource( ModelResource ) :
 class ProtocolRecordingResource( ModelResource ) :
     block = fields.ForeignKey( RecordingBlockResource, 'block' )
     file = fields.ForeignKey( FileResource, 'file', null=True )
-    stimulus = fields.ForeignKey( SpikeStimulusResource, 'stimulus', null=True )
+    stimulus = fields.ForeignKey( StimulusResource, 'stimulus', null=True )
     class Meta:
         queryset = ProtocolRecording.objects.all()
         resource_name = 'protocolrecording'
