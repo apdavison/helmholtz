@@ -9,9 +9,14 @@ from tastypie.contrib.contenttypes.fields import GenericForeignKeyField
 from helmholtz.analysis.models import DataSource
 from helmholtz.analysis.models import Step
 from helmholtz.analysis.models import Image
+# data sources
+from helmholtz.recording.models import RecordingBlock
+from helmholtz.recording.models import ProtocolRecording
 from helmholtz.recording.models import ContinuousSignal
 from helmholtz.recording.models import DiscreteSignal
-# allowed resources
+# and their resources
+from helmholtz.recording.api.resources import RecordingBlockResource
+from helmholtz.recording.api.resources import ProtocolRecordingResource
 from helmholtz.recording.api.resources import ContinuousSignalResource
 from helmholtz.recording.api.resources import DiscreteSignalResource
 # ... add here other sources
@@ -19,6 +24,8 @@ from helmholtz.recording.api.resources import DiscreteSignalResource
 # Resources
 class DataSourceResource( ModelResource ) :
     object = GenericForeignKeyField( {
+        RecordingBlock: RecordingBlockResource,
+        ProtocolRecording: ProtocolRecordingResource,
         ContinuousSignal: ContinuousSignalResource,
         DiscreteSignal: DiscreteSignalResource,
     }, 'object' ) # add the others here
@@ -26,7 +33,8 @@ class DataSourceResource( ModelResource ) :
         queryset = DataSource.objects.all()
         resource_name = 'datasource'
         filtering = {
-            'object' : ALL_WITH_RELATIONS,
+            'content_type' : ALL_WITH_RELATIONS,
+            'object_id' : ALL_WITH_RELATIONS,
         }
         authentication = BasicAuthentication()
         authorization = DjangoAuthorization()

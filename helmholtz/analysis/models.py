@@ -27,7 +27,7 @@ class DataSource( models.Model ):
 
 class Step( models.Model ):
     inputs = models.ManyToManyField( DataSource, related_name='inputs', null=True, blank=True )
-    outputs = models.ManyToManyField( DataSource, related_name='outputs' )
+    outputs = models.ManyToManyField( DataSource, related_name='outputs', null=True, blank=True )
     algorithm = models.CharField( max_length=100 )
     parameters = models.CharField( max_length=250, null=True, blank=True )
     

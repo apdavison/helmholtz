@@ -98,9 +98,12 @@ class DriftingGratingStimulusResource( ModelResource ) :
         queryset = DriftingGratingStimulus.objects.all()
         resource_name = 'driftinggratingstimulus'
         filtering = {
-            'label': ALL,
+            'label': ('exact','startswith',),
             'stimulation_type': ALL_WITH_RELATIONS,
             'stimulus_generator': ALL_WITH_RELATIONS,
+            'stimulation_shape': ALL,
+            'contrast': ALL,
+            'theta': ALL,
         }
         allowed_methods = [ 'get', 'post', 'put', 'delete', 'patch' ]
         authentication = BasicAuthentication()
