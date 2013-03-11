@@ -11,7 +11,6 @@ from helmholtz.preparation.models import Preparation
 # Allowed resources
 from helmholtz.species.api.resources import StrainResource
 from helmholtz.device.api.resources import DeviceResource
-from helmholtz.measurements.api.resources import MeasurementResource
 from helmholtz.chemistry.api.resources import SolutionResource
 from helmholtz.people.api.resources import SupplierResource
 

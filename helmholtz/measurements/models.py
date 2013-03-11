@@ -8,7 +8,7 @@ from helmholtz.units.models import Unit
 
 
 choices = (('I', 'integer'), ('F', 'float'), ('S', 'string'), ('B', 'boolean'))
-class Parameter(models.Model):
+class Parameter( models.Model ):
     """Extend base properties of a class."""
     label = models.CharField(max_length=50)
     verbose_name = models.TextField(null=True, blank=True)
