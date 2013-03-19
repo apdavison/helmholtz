@@ -31,8 +31,8 @@ from helmholtz.preparations.models import Animal
 from helmholtz.preparations.models import Preparation
 from helmholtz.preparations.api.resources import AnimalResource
 from helmholtz.preparations.api.resources import PreparationResource
-from helmholtz.device.models import Device
-from helmholtz.device.api.resources import DeviceResource
+from helmholtz.devices.models import Item
+from helmholtz.devices.api.resources import ItemResource
 
 
 # Resources
@@ -58,7 +58,7 @@ class MeasurementResource( ModelResource ) :
     object = GenericForeignKeyField( {
         Cell: CellResource,
         Animal: AnimalResource,
-        Device: DeviceResource,
+        Item: ItemResource,
         Preparation: PreparationResource,
     }, 'object' ) # add the others here
 
