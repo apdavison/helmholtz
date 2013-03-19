@@ -5,7 +5,7 @@ from django.contrib.contenttypes import generic
 
 #from helmholtz.neuralstructures.models import CellType
 #from helmholtz.neuralstructures.models import Cell
-#from helmholtz.stimulation.models import Stimulus
+#from helmholtz.stimulations.models import Stimulus
 from helmholtz.storage.models import File
 
 class DataSource( models.Model ):
