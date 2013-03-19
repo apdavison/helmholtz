@@ -81,6 +81,11 @@ class MeasurementResource( ModelResource ) :
 # and applies this view:
 
 @csrf_exempt
+def set_measurement_by_name( request, resource_name, pk ) :
+    resource_app = resource_name +'s'
+    return set_measurement( request, resource_app, resource_name, pk )
+
+@csrf_exempt
 def set_measurement( request, resource_app, resource_name, pk ) :
     mr = MeasurementResource()
     mr.method_check( request, allowed=['post'] )

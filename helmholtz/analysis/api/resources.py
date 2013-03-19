@@ -1,4 +1,6 @@
 # analysis/api/resources.py
+import re
+from django.contrib.contenttypes.models import ContentType
 
 from tastypie.authentication import Authentication, BasicAuthentication
 from tastypie.authorization import Authorization, DjangoAuthorization
@@ -12,11 +14,13 @@ from helmholtz.analysis.models import Image
 # data sources
 from helmholtz.recordings.models import Block
 from helmholtz.recordings.models import Recording
+from helmholtz.recordings.models import Segment
 from helmholtz.recordings.models import ContinuousSignal
 from helmholtz.recordings.models import DiscreteSignal
 # and their resources
 from helmholtz.recordings.api.resources import BlockResource
 from helmholtz.recordings.api.resources import RecordingResource
+from helmholtz.recordings.api.resources import SegmentResource
 from helmholtz.recordings.api.resources import ContinuousSignalResource
 from helmholtz.recordings.api.resources import DiscreteSignalResource
 # ... add here other sources
@@ -26,6 +30,7 @@ class DataSourceResource( ModelResource ) :
     object = GenericForeignKeyField( {
         Block: BlockResource,
         Recording: RecordingResource,
+        Segment: SegmentResource,
         ContinuousSignal: ContinuousSignalResource,
         DiscreteSignal: DiscreteSignalResource,
     }, 'object' ) # add the others here
@@ -34,8 +39,7 @@ class DataSourceResource( ModelResource ) :
         resource_name = 'datasource'
         excludes = ['id']
         filtering = {
-            'content_type' : ALL_WITH_RELATIONS,
-            'object_id' : ALL_WITH_RELATIONS,
+            'object' : ALL_WITH_RELATIONS,
         }
         authentication = BasicAuthentication()
         authorization = DjangoAuthorization()

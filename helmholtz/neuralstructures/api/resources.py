@@ -1,4 +1,5 @@
-# chemistry/api/resources.py
+# neuralstructures/api/resources.py
+from django.conf.urls.defaults import url
 
 from tastypie.authentication import Authentication, BasicAuthentication
 from tastypie.authorization import Authorization, DjangoAuthorization
@@ -59,4 +60,3 @@ class CellResource( ModelResource ) :
         allowed_methods = [ 'get', 'post', 'put', 'delete', 'patch' ]
         authentication = BasicAuthentication()
         authorization = DjangoAuthorization()
-
