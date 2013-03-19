@@ -27,10 +27,10 @@ from helmholtz.units.api.resources import UnitResource
 # Allowed resources for measurement
 from helmholtz.neuralstructures.models import Cell
 from helmholtz.neuralstructures.api.resources import CellResource
-from helmholtz.preparation.models import Animal
-from helmholtz.preparation.models import Preparation
-from helmholtz.preparation.api.resources import AnimalResource
-from helmholtz.preparation.api.resources import PreparationResource
+from helmholtz.preparations.models import Animal
+from helmholtz.preparations.models import Preparation
+from helmholtz.preparations.api.resources import AnimalResource
+from helmholtz.preparations.api.resources import PreparationResource
 from helmholtz.device.models import Device
 from helmholtz.device.api.resources import DeviceResource
 
