@@ -1,4 +1,4 @@
-# measurements/api/resources.py
+# analysis/api/resources.py
 
 from tastypie.authentication import Authentication, BasicAuthentication
 from tastypie.authorization import Authorization, DjangoAuthorization
@@ -10,28 +10,29 @@ from helmholtz.analysis.models import DataSource
 from helmholtz.analysis.models import Step
 from helmholtz.analysis.models import Image
 # data sources
-from helmholtz.recording.models import RecordingBlock
-from helmholtz.recording.models import ProtocolRecording
-from helmholtz.recording.models import ContinuousSignal
-from helmholtz.recording.models import DiscreteSignal
+from helmholtz.recordings.models import Block
+from helmholtz.recordings.models import Recording
+from helmholtz.recordings.models import ContinuousSignal
+from helmholtz.recordings.models import DiscreteSignal
 # and their resources
-from helmholtz.recording.api.resources import RecordingBlockResource
-from helmholtz.recording.api.resources import ProtocolRecordingResource
-from helmholtz.recording.api.resources import ContinuousSignalResource
-from helmholtz.recording.api.resources import DiscreteSignalResource
+from helmholtz.recordings.api.resources import BlockResource
+from helmholtz.recordings.api.resources import RecordingResource
+from helmholtz.recordings.api.resources import ContinuousSignalResource
+from helmholtz.recordings.api.resources import DiscreteSignalResource
 # ... add here other sources
 
 # Resources
 class DataSourceResource( ModelResource ) :
     object = GenericForeignKeyField( {
-        RecordingBlock: RecordingBlockResource,
-        ProtocolRecording: ProtocolRecordingResource,
+        Block: BlockResource,
+        Recording: RecordingResource,
         ContinuousSignal: ContinuousSignalResource,
         DiscreteSignal: DiscreteSignalResource,
     }, 'object' ) # add the others here
     class Meta:
         queryset = DataSource.objects.all()
         resource_name = 'datasource'
+        excludes = ['id']
         filtering = {
             'content_type' : ALL_WITH_RELATIONS,
             'object_id' : ALL_WITH_RELATIONS,
@@ -47,6 +48,7 @@ class StepResource( ModelResource ) :
     class Meta:
         queryset = Step.objects.all()
         resource_name = 'step'
+        excludes = ['id']
         filtering = {
             'inputs' : ALL_WITH_RELATIONS,
             'outputs' : ALL_WITH_RELATIONS,
@@ -62,6 +64,7 @@ class ImageResource( ModelResource ) :
     class Meta:
         queryset = Image.objects.all()
         resource_name = 'image'
+        excludes = ['id']
         filtering = {
             'generator' : ALL_WITH_RELATIONS,
             'file' : ALL_WITH_RELATIONS,
