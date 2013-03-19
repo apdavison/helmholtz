@@ -21,7 +21,7 @@ from helmholtz.core.shortcuts import get_subclasses
 from helmholtz.measurements.models import Measurement
 
 
-class ScientificStructure( HierarchicalStructure ) :
+class Organization( HierarchicalStructure ) :
     """Hierarchical structure representing a large variety of scientific structures.
     
     NB : The db_group parameter specifies the group relative to a scientific structure. 
@@ -47,12 +47,12 @@ class ScientificStructure( HierarchicalStructure ) :
     
     @property
     def manager(self):
-        """Return the manager a of the :class:`ScientificStructure` instance."""
+        """Return the manager a of the :class:`Organization` instance."""
         positions = self.position_set.filter(position_type__name="manager")
         return positions.latest('start').researcher if positions else None
     
     def _years(self):
-        """Age of the :class:`ScientificStructure` instance in years."""
+        """Age of the :class:`Organization` instance in years."""
         today = date.today()
         _end = self.dissolution_date or today
         if self.foundation_date :
@@ -69,7 +69,7 @@ class ScientificStructure( HierarchicalStructure ) :
     def create_diminutive(self, separator="_"):
         """
         Return an auto generated diminutive from the
-        name of the :class:`ScientificStructure` instance.
+        name of the :class:`Organization` instance.
         """
         if not self.diminutive:
             self.diminutive = self.name.replace(" ", separator)
@@ -78,7 +78,7 @@ class ScientificStructure( HierarchicalStructure ) :
     def researchers(self):
         """
         Return :class:`django.contrib.auth.models.Researchers`
-        instances corresponding to the :class:`ScientificStructure`
+        instances corresponding to the :class:`Organization`
         instance and its children.
         """
         structures = list()
@@ -95,7 +95,7 @@ class ScientificStructure( HierarchicalStructure ) :
     def experiments(self):
         """
         Return :class:`Experiment` instances provided
-        by the :class:`ScientificStructure` instance.
+        by the :class:`Organization` instance.
         """
         q1 = models.Q(setup__place__parent=self)
         q2 = models.Q(setup__place=self)
@@ -105,11 +105,11 @@ class ScientificStructure( HierarchicalStructure ) :
     def number_of_researchers(self):
         """
         Get the number of :class:`Researcher` instances
-        working in the :class:`ScientificStructure` instance.
+        working in the :class:`Organization` instance.
         """
         aggregate = self.position_set.all().aggregate(Count("researcher", distinct=True))
         count = aggregate["researcher__count"]
-        if self.scientificstructure_set.count :
+        if self.organization_set.count :
             for children in self.get_children(recursive=False) :
                 count += children.number_of_researchers()
         return count
@@ -117,7 +117,7 @@ class ScientificStructure( HierarchicalStructure ) :
     def get_groups(self, recursive=False):
         """
         Return :class:`django.contrib.auth.models.Group`
-        instances corresponding to the :class:`ScientificStructure`
+        instances corresponding to the :class:`Organization`
         instance and its children.
         """
         groups = list()
@@ -130,7 +130,7 @@ class ScientificStructure( HierarchicalStructure ) :
 
 class Researcher( models.Model ):
     """
-    Anybody working in a :class:`ScientificStructure`.
+    Anybody working in a :class:`Organization`.
     Used as a profile for a database :class:`django.contrib.auth.models.User`.
     """
     user = models.OneToOneField( User, null=True, blank=True, verbose_name="database user" )
@@ -161,7 +161,7 @@ class Researcher( models.Model ):
         """
         Return the latest :class:`Position` of the 
         :class:`Researcher` instance for the specified
-        :class:`ScientificStructure`.
+        :class:`Organization`.
         """
         structures = list()
         structures.append(structure)
@@ -186,7 +186,7 @@ class Researcher( models.Model ):
         """
         Return the last effective :class:`Position` of
         the :class:`Researcher` instance in the specified
-        :class:`ScientificStructure`.
+        :class:`Organization`.
         """
         if structure :
             structures = list()
@@ -199,7 +199,7 @@ class Researcher( models.Model ):
     
     def number_of_structures(self):
         """
-        Get the number of :class:`ScientificStructure`
+        Get the number of :class:`Organization`
         where a :class:`Researcher` has worked.
         """
         aggregate = self.position_set.all().aggregate(Count("structure", distinct=True))
@@ -209,13 +209,13 @@ class Researcher( models.Model ):
 
 class Position( models.Model ) :
     """
-    Contract linking a :class:`Researcher` to a :class:`ScientificStructure`.
+    Contract linking a :class:`Researcher` to a :class:`Organization`.
     
     NB : this class brings more flexibility by separating people 
     descriptions from their positions in a hierarchical structure.
     """
     researcher = models.ForeignKey( Researcher )
-    structure = models.ForeignKey( ScientificStructure )
+    structure = models.ForeignKey( Organization )
     type = models.CharField( max_length=256 )
     start = models.DateField()
     end = models.DateField( null=True )

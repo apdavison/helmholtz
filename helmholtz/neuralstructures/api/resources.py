@@ -20,8 +20,8 @@ class BrainRegionResource( ModelResource ) :
     class Meta:
         queryset = BrainRegion.objects.all()
         resource_name = 'brainregion' # optional, if not present it will be generated from classname
+        excludes = ['id']
         filtering = {
-            'id': ALL,
             'name': ALL,
             'parent': ALL_WITH_RELATIONS,
             'species': ALL_WITH_RELATIONS,
@@ -36,8 +36,8 @@ class CellTypeResource( ModelResource ) :
     class Meta:
         queryset = CellType.objects.all()
         resource_name = 'celltype'
+        excludes = ['id']
         filtering = {
-            'id': ALL,
             'name': ALL,
             'brain_regions': ALL_WITH_RELATIONS,
         }
@@ -51,6 +51,7 @@ class CellResource( ModelResource ) :
     class Meta:
         queryset = Cell.objects.all()
         resource_name = 'cell'
+        excludes = ['id']
         filtering = {
             'label': ALL,
             'type': ALL_WITH_RELATIONS,

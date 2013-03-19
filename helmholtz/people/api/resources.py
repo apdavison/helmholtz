@@ -9,7 +9,7 @@ from tastypie.authorization import Authorization, DjangoAuthorization
 from tastypie.resources import ModelResource, ALL, ALL_WITH_RELATIONS
 from tastypie import fields
 
-from helmholtz.people.models import ScientificStructure
+from helmholtz.people.models import Organization
 from helmholtz.people.models import Researcher
 from helmholtz.people.models import Position
 from helmholtz.people.models import Supplier
@@ -21,10 +21,11 @@ from helmholtz.measurements.models import Measurement
 
 
 # Resources
-class ScientificStructureResource( ModelResource ) :
+class OrganizationResource( ModelResource ) :
     class Meta:
-        queryset = ScientificStructure.objects.all()
-        resource_name = 'scientificstructure' # optional, if not present it will be generated from classname
+        queryset = Organization.objects.all()
+        resource_name = 'organization' # optional, if not present it will be generated from classname
+        excludes = ['id']
         filtering = {
             'name': ALL,
             'diminutive': ALL,
@@ -38,7 +39,7 @@ class UserResource( ModelResource ) :
     class Meta:
         queryset = User.objects.all()
         resource_name = 'user'
-        excludes = ['password', 'is_superuser', 'is_staff', 'is_active']
+        excludes = ['id','password', 'is_superuser', 'is_staff', 'is_active']
         filtering = {
             'username': ALL,
         }
@@ -50,34 +51,35 @@ class ResearcherResource( ModelResource ) :
     user = fields.ForeignKey( UserResource, 'user' )
     
     # output measurement in addition to normal fields
-    def dehydrate( self, bundle ) :
-        # get the content_type id for the current resource
-        ctype = ContentType.objects.get( model=self._meta.resource_name )
-        # get the measurements for the current resource object
-        related_to_model = Measurement.objects.filter( content_type=ctype, object_id=bundle.obj.pk )
-        #if len( related_to_model ) : if we want that measurement is absent from unmeasured items
-        bundle.data['measurements'] = related_to_model # always present even if empty
-        return bundle
+    #def dehydrate( self, bundle ) :
+    #    # get the content_type id for the current resource
+    #    ctype = ContentType.objects.get( model=self._meta.resource_name )
+    #    # get the measurements for the current resource object
+    #    related_to_model = Measurement.objects.filter( content_type=ctype, object_id=bundle.obj.pk )
+    #    #if len( related_to_model ) : if we want that measurement is absent from unmeasured items
+    #    bundle.data['measurements'] = related_to_model # always present even if empty
+    #    return bundle
 
     class Meta:
         queryset = Researcher.objects.all()
         resource_name = 'researcher'
-        authentication = BasicAuthentication()
-        authorization = DjangoAuthorization()
-        allowed_methods = [ 'get', 'post', 'put', 'delete', 'patch' ]
+        excludes = ['id']
         filtering = {
-            'id' : ALL,
             'user' : ALL_WITH_RELATIONS,
         }
+        allowed_methods = [ 'get', 'post', 'put', 'delete', 'patch' ]
+        authentication = BasicAuthentication()
+        authorization = DjangoAuthorization()
 
 
 class PositionResource( ModelResource ) :
     researcher = fields.ForeignKey( ResearcherResource, 'researcher' )
-    structure = fields.ForeignKey( ScientificStructureResource, 'structure' )
+    structure = fields.ForeignKey( OrganizationResource, 'structure' )
 
     class Meta:
         queryset = Position.objects.all()
         resource_name = 'position'
+        excludes = ['id']
         filtering = {
             'type': ALL,
             'researcher': ALL_WITH_RELATIONS,
@@ -92,6 +94,7 @@ class SupplierResource( ModelResource ) :
     class Meta:
         queryset = Supplier.objects.all()
         resource_name = 'supplier'
+        excludes = ['id']
         filtering = {
             'name': ALL,
         }

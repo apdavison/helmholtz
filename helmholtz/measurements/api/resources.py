@@ -41,6 +41,7 @@ class ParameterResource( ModelResource ) :
     class Meta:
         queryset = Parameter.objects.all()
         resource_name = 'parameter' # optional, if not present it will be generated from classname
+        excludes = ['id']
         filtering = {
             'label': ALL,
             'pattern': ALL,
@@ -65,6 +66,7 @@ class MeasurementResource( ModelResource ) :
     class Meta:
         queryset = Measurement.objects.all()
         resource_name = 'measurement'
+        excludes = ['id']
         filtering = {
             'parameter' : ALL_WITH_RELATIONS,
             'unit' : ALL_WITH_RELATIONS,

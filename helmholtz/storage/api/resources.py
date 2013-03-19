@@ -17,6 +17,7 @@ class CommunicationProtocolResource( ModelResource ) :
     class Meta:
         queryset = CommunicationProtocol.objects.all()
         resource_name = 'communicationprotocol' # optional, if not present it will be generated from classname
+        excludes = ['id']
         filtering = {
             'name': ALL,
             'initials': ALL,
@@ -31,6 +32,7 @@ class MimeTypeResource( ModelResource ) :
     class Meta:
         queryset = MimeType.objects.all()
         resource_name = 'mimetype'
+        excludes = ['id']
         filtering = {
             'name': ALL,
             'extension': ALL,
@@ -46,6 +48,7 @@ class FileServerResource( ModelResource ) :
     class Meta:
         queryset = FileServer.objects.all()
         resource_name = 'fileserver'
+        excludes = ['id']
         filtering = {
             'label': ALL,
             'protocol': ALL_WITH_RELATIONS,
@@ -62,6 +65,7 @@ class FileLocationResource( ModelResource ) :
     class Meta:
         queryset = FileLocation.objects.all()
         resource_name = 'filelocation'
+        excludes = ['id']
         filtering = {
             'server': ALL_WITH_RELATIONS,
             'drive': ALL,
@@ -79,6 +83,7 @@ class FileResource( ModelResource ) :
     class Meta:
         queryset = File.objects.all()
         resource_name = 'file'
+        excludes = ['id']
         filtering = {
             'name': ALL,
             'location': ALL_WITH_RELATIONS,

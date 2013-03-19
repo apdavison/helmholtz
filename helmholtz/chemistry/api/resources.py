@@ -19,6 +19,7 @@ class SubstanceResource( ModelResource ) :
     class Meta:
         queryset = Substance.objects.all()
         resource_name = 'substance' # optional, if not present it will be generated from classname
+        excludes = ['id']
         filtering = {
             'name': ALL,
         }
@@ -33,6 +34,7 @@ class ProductResource( ModelResource ) :
     class Meta:
         queryset = Product.objects.all()
         resource_name = 'product'
+        excludes = ['id']
         filtering = {
             'catalog_ref': ALL,
             'name': ALL,
@@ -47,6 +49,7 @@ class SolutionResource( ModelResource ) :
     class Meta:
         queryset = Solution.objects.all()
         resource_name = 'solution'
+        excludes = ['id']
         filtering = {
             'label': ALL,
         }
@@ -61,6 +64,7 @@ class QuantityOfSubstanceResource( ModelResource ) :
     class Meta:
         queryset = QuantityOfSubstance.objects.all()
         resource_name = 'quantityofsubstance'
+        excludes = ['id']
         filtering = {
             'concentration': ALL,
             'solution': ALL_WITH_RELATIONS,

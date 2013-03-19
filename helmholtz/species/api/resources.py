@@ -14,6 +14,7 @@ class SpeciesResource( ModelResource ) :
     class Meta:
         queryset = Species.objects.all()
         resource_name = 'species' # optional, if not present it will be generated from classname
+        excludes = ['id']
         filtering = {
             'scientific_name': ALL,
             'english_name': ALL,
@@ -29,11 +30,12 @@ class StrainResource( ModelResource ) :
     class Meta:
         queryset = Strain.objects.all()
         resource_name = 'strain'
-        authentication = BasicAuthentication()
-        authorization = DjangoAuthorization()
-        allowed_methods = [ 'get', 'post', 'put', 'delete', 'patch' ]
+        excludes = ['id']
         filtering = {
             'nomenclature' : ALL,
             'label' : ALL,
             'species' : ALL_WITH_RELATIONS,
         }
+        allowed_methods = [ 'get', 'post', 'put', 'delete', 'patch' ]
+        authentication = BasicAuthentication()
+        authorization = DjangoAuthorization()
