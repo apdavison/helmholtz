@@ -1,0 +1,22 @@
+<div class="container-fluid">
+    <div class="row-fluid">
+
+        <!--Sidebar-->
+        <div class="span2">
+        place for exp?
+        </div>
+
+        <!--Body-->
+        <div class="span10">
+            <table class="table-striped table-condensed">
+                <tr ng-repeat="exp in experiment.objects | filter:query | orderBy:orderProp">
+                    <td><a href="#{{exp.resource_uri}}">{{exp.label}}</a></td>
+                    <td>{{exp.start}}</td>
+                    <td>{{exp.end}}</td>
+                    <td>{{exp.type}}</td>
+                </tr>
+            </table>
+        </div>
+
+    </div>
+</div>

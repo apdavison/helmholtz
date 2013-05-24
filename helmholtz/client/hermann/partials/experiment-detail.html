@@ -1,0 +1,33 @@
+<div class="container-fluid">
+    <div class="row-fluid">
+
+        <!--Sidebar-->
+        <div class="span2">
+        place for exp?
+        </div>
+
+        <!--Body-->
+        <div class="span10">
+
+<h1>{{experiment.label}}</h1>
+
+<ul class="specs">
+  <li>
+    <dl>
+      <dt>Start</dt><dd>{{experiment.start}}</dd>
+      <dt>End</dt><dd>{{experiment.end}}</dd>
+      <dt>Type</dt><dd>{{experiment.type}}</dd>
+      <dt>Setup</dt><dd>{{experiment.setup}}</dd>
+      <dt>Preparation</dt><dd>{{experiment.preparation}}</dd>
+    </dl>
+  </li>
+  <li>
+    <span>Researchers</span>
+    <dl>
+      <dd ng-repeat="res in experiment.researchers">{{res}}</dd>
+    </dl>
+  </li>
+</ul>
+
+    </div>
+</div>
