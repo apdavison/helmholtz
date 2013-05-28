@@ -9,7 +9,8 @@ try:
 except AttributeError:
     XS_SHARING_ALLOWED_ORIGINS = '*'
     XS_SHARING_ALLOWED_METHODS = ['POST', 'GET', 'OPTIONS', 'PUT', 'DELETE']
-    XS_SHARING_ALLOWED_HEADERS = ['*']
+    #XS_SHARING_ALLOWED_HEADERS = ['*']
+    XS_SHARING_ALLOWED_HEADERS = ['Origin','Authorization','Content-Type','Accept']
     XS_SHARING_ALLOWED_CREDENTIALS = 'true'
 
 class XsSharing(object):
@@ -22,6 +23,8 @@ class XsSharing(object):
         if 'HTTP_ACCESS_CONTROL_REQUEST_METHOD' in request.META:
             response = http.HttpResponse()
             response['Access-Control-Allow-Origin']  = XS_SHARING_ALLOWED_ORIGINS 
+            if 'HTTP_ORIGIN' in request.META:
+                response['Access-Control-Allow-Origin']  = request.META['HTTP_ORIGIN']
             response['Access-Control-Allow-Methods'] = ",".join( XS_SHARING_ALLOWED_METHODS ) 
             response['Access-Control-Allow-Headers'] = ",".join( XS_SHARING_ALLOWED_HEADERS )
             response['Access-Control-Allow-Credentials'] = XS_SHARING_ALLOWED_CREDENTIALS
@@ -30,10 +33,9 @@ class XsSharing(object):
 
     def process_response(self, request, response):
         response['Access-Control-Allow-Origin']  = XS_SHARING_ALLOWED_ORIGINS 
+        if 'HTTP_ORIGIN' in request.META:
+            response['Access-Control-Allow-Origin']  = request.META['HTTP_ORIGIN']
         response['Access-Control-Allow-Methods'] = ",".join( XS_SHARING_ALLOWED_METHODS )
         response['Access-Control-Allow-Headers'] = ",".join( XS_SHARING_ALLOWED_HEADERS )
         response['Access-Control-Allow-Credentials'] = XS_SHARING_ALLOWED_CREDENTIALS
-        #response['My-Logging'] = "response: "+ response.content
-        #response['Content-Length'] = len( response.content )
-        #response['Content-Type'] = 'application/json; charset=utf-8'
         return response

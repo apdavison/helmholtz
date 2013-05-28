@@ -9,11 +9,15 @@ angular.module( 'notebook', [ 'notebookFilters', 'notebookServices' ])
             $routeProvider
                 .when('/experiment', {
                     templateUrl: 'partials/experiment-list.html',   
-                    controller: ExperimentListCtrl
+                    controller: ListExperiment
                 })
                 .when('/experiment/:eId', {
                     templateUrl: 'partials/experiment-detail.html', 
-                    controller: ExperimentDetailCtrl
+                    controller: DetailExperiment
+                })
+                .when('/experiment/edit/:eId', {
+                    templateUrl: 'partials/experiment-edit.html', 
+                    controller: EditExperiment
                 })
                 .otherwise({redirectTo: '/experiment'});
         }

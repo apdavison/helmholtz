@@ -12,8 +12,8 @@
 <h1>{{experiment.label}}</h1>
 
 <ul class="specs">
-  <li>
-    <dl>
+  <li class="span5">
+    <dl class="dl-horizontal">
       <dt>Start</dt><dd>{{experiment.start}}</dd>
       <dt>End</dt><dd>{{experiment.end}}</dd>
       <dt>Type</dt><dd>{{experiment.type}}</dd>
@@ -21,10 +21,12 @@
       <dt>Preparation</dt><dd>{{experiment.preparation}}</dd>
     </dl>
   </li>
-  <li>
+  <li class="span5">
     <span>Researchers</span>
-    <dl>
-      <dd ng-repeat="res in experiment.researchers">{{res}}</dd>
+    <dl class="dl-horizontal" ng-repeat="r in researchers">
+      <dt>User URI</dt><dd>{{r.user}}</dd>
+      <dt>Phone</dt><dd>{{r.phone}}</dd>
+      <dt>Notes</dt><dd>{{r.notes}}</dd>
     </dl>
   </li>
 </ul>

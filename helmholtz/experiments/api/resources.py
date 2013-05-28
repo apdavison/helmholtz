@@ -31,4 +31,4 @@ class ExperimentResource( ModelResource ) :
         allowed_methods = [ 'get', 'post', 'put', 'delete', 'patch' ]
         authentication = BasicAuthentication()
         authorization = DjangoAuthorization()
-
+        #trailing_slash = False

@@ -3,45 +3,47 @@
 /* Controllers */
 //if minimizing: ExperimentDetailCtrl.$inject = ['$scope', '$routeParams', 'Experiment'];
 
-function ExperimentListCtrl( $scope, Experiment )
+function ListExperiment( $scope, Experiment )
 {
-    $scope.experiment = Experiment.query();
+    $scope.experiment = Experiment.get();
 }
 
-function ExperimentDetailCtrl($scope, $routeParams, Experiment ) 
+function DetailExperiment($scope, $routeParams, Experiment, Researcher ) 
 {
-    $scope.experiment = Experiment.query( {id: $routeParams.eId} );
-}
-
-
-
-
-/*
-function ExperimentDetailCtrl($scope, $routeParams, $http ) 
-{
-    alert('route:'+$routeParams.eId);
-    $http.get( 'http://helm1/experiments/'+ $routeParams.eId )
-        .success( function( data ){
-            alert( 'success' );
-            $scope.experiment = data;
-        })
-        .error( function(){
-            alert( 'error' );
+    $scope.experiment = Experiment.get( {id: $routeParams.eId}, function(data){
+        // get researchers, to be expanded with another request
+        $scope.researchers = new Array;
+        $scope.experiment.researchers.forEach( function( entry ){
+            var res = Researcher.query( {uri: entry} );
+            $scope.researchers.push( res );
         });
+        // get setup, already coming expanded by taastypie (if enabled)
+        //$scope.setup = ;
+        // get preparation, same as above
+        //$scope.preparation = ;
+        // populate form from server:
+        $scope.master_exp = angular.copy( $scope.experiment ); // default
+    });
 }
-*/
 
+function EditExperiment($scope, $http, $routeParams, Experiment, Researcher ) 
+{
+    DetailExperiment($scope, $routeParams, Experiment, Researcher );
+    // local update
+    $scope.update = function( exp ){
+        $scope.master_exp = angular.copy( exp );
+        // check if something is changed
+        // ...
+        // save to server
+        $scope.experiment.$save(); // removes trailing slash
+    };
+    // reset
+    $scope.reset = function(){
+        $scope.experiment = angular.copy( $scope.master_exp );
+    };
+    // reset
+    $scope.delete = function( exp ){
+        //$scope.experiment.$delete();
+    };
+}
 
-/*
-    //$scope.experiment = Experiment.get({id: $routeParams.id}, function(experiment) {
-    //    //$scope.mainImageUrl = phone.images[0];
-    //});
-
-  $scope.phone = Phone.get({phoneId: $routeParams.phoneId}, function(phone) {
-      $scope.mainImageUrl = phone.images[0];
-  });
-
-  $scope.setImage = function(imageUrl) {
-      $scope.mainImageUrl = imageUrl; 
-  }
-*/
