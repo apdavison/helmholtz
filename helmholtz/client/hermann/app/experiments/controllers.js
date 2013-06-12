@@ -17,7 +17,7 @@ function DetailExperiment($scope, $routeParams, Experiment, Researcher )
             var res = Researcher.query( {uri: entry} );
             $scope.researchers.push( res );
         });
-        // get setup, already coming expanded by taastypie (if enabled)
+        // get setup, already coming expanded by tastypie (if enabled)
         //$scope.setup = ;
         // get preparation, same as above
         //$scope.preparation = ;

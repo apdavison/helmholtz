@@ -9,11 +9,14 @@
     <link rel="stylesheet" href="common/css/app.css">
     <link rel="stylesheet" href="common/css/bootstrap.css">
     <style> body {padding-top:60px;} </style>
-
     <script src="common/lib/angular/angular.js"></script>
     <script src="common/lib/angular/angular-resource.js"></script>
+    <script src="common/lib/angular/angular-cookies.js"></script>
+    <script src="common/lib/angular/ui-bootstrap-tpls-0.3.0.js"></script>
     <script src="app.js"></script>
     <script src="common/filters.js"></script>
+    <script src="login/model.js"></script>
+    <script src="login/controllers.js"></script>
     <script src="experiments/model.js"></script>
     <script src="experiments/controllers.js"></script>
     <script src="researchers/model.js"></script>
@@ -34,6 +37,9 @@
                         <li><a href="#/drugs">Drugs</a></li>
                         <li><a href="#/storage">Storage</a></li>
                     </ul>
+                    <div class="pull-right" ng-show="showLogout">
+                        <button class="btn btn-mini btn-inverse" ng-click="removeAuthorization()">Logout</a>
+                    </div>
                     <div class="navbar-search pull-right">
                         <input type="text" class="search-query" placeholder="Filter" ng-model="query">
                     </div>
