@@ -17,7 +17,8 @@ angular.module( 'hermann', [
     //'hermann.services',
     'hermann.login', 
     'hermann.experiments',
-    'hermann.researchers',
+    'hermann.people',
+    'hermann.preparations',
 ])
 
 .config(  

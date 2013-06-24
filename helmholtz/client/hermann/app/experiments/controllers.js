@@ -8,27 +8,30 @@ function ListExperiment( $scope, Experiment )
     $scope.experiment = Experiment.get();
 }
 
-function DetailExperiment($scope, $routeParams, Experiment, Researcher ) 
+function DetailExperiment($scope, $routeParams, Experiment, People, Preparation, Animal ) 
 {
     $scope.experiment = Experiment.get( {id: $routeParams.eId}, function(data){
-        // get researchers, to be expanded with another request
+        // when the exp is available, get researchers, to be expanded with another request
         $scope.researchers = new Array;
         $scope.experiment.researchers.forEach( function( entry ){
-            var res = Researcher.query( {uri: entry} );
+            var res = People.get( {uri: entry} );
             $scope.researchers.push( res );
         });
-        // get setup, already coming expanded by tastypie (if enabled)
+        // get preparation
+        var preparation = Preparation.get({uri:$scope.experiment.preparation}, function(data){
+            // when the preparation is available, get the animal
+            $scope.animal = Animal.get({uri:preparation.animal});
+        });
+        // get setup
         //$scope.setup = ;
-        // get preparation, same as above
-        //$scope.preparation = ;
         // populate form from server:
         $scope.master_exp = angular.copy( $scope.experiment ); // default
     });
 }
 
-function EditExperiment($scope, $http, $routeParams, Experiment, Researcher ) 
+function EditExperiment($scope, $http, $routeParams, Experiment, People ) 
 {
-    DetailExperiment($scope, $routeParams, Experiment, Researcher );
+    DetailExperiment($scope, $routeParams, Experiment, People );
     // local update
     $scope.update = function( exp ){
         $scope.master_exp = angular.copy( exp );
