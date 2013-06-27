@@ -1,0 +1,50 @@
+<div class="container-fluid">
+    <div class="row-fluid">
+
+        <!--Body-->
+        <div class="span12">
+
+<h1>Label: {{experiment.label}}</h1>
+
+<div class="specs">
+    <form novalidate class="form-horizontal" ng-controller="EditExperiment">
+    <div class="control-group">
+        <label class="control-label" for="start">Start Date</label>
+        <div class="controls"><input id="start" type="text" ng-model="experiment.start"></div>
+    </div>
+    <div class="control-group">
+        <label class="control-label" for="end">End Date</label>
+        <div class="controls"><input id="end" type="text" ng-model="experiment.end"></div>
+    </div>
+    <div class="control-group">
+        <label class="control-label" for="type">Type</label>
+        <div class="controls"><input id="type" type="text" ng-model="experiment.type"></div>
+    </div>
+    <div class="control-group">
+        <label class="control-label" for="setup">Setup</label>
+        <div class="controls"><input id="setup" type="text"ng-model="experiment.setup"></div>
+    </div>
+    <div class="control-group">
+        <label class="control-label" for="prep">Preparation</label>
+        <div class="controls"><input id="prep" type="text" ng-model="experiment.preparation"></div>
+    </div>
+
+    <span>Researchers</span>
+    <dl ng-repeat="r in researchers">
+      <dt>User URI</dt><dd>{{r.user}}</dd>
+      <dt>Notes</dt><dd>{{r.notes}}</dd>
+    </dl>
+    <div class="control-group">
+        <button ng-click="reset()" class="btn">Cancel</button>
+        <button ng-click="update(experiment)" class="btn">Save</button>
+        <button ng-click="delete(experiment)" class="btn btn-danger">Delete</button>
+    </div>
+    </form>
+    <!--
+    -->
+    <pre>local = {{experiment | json}}</pre>
+    <pre>master = {{master_exp | json}}</pre>
+</div>
+
+    </div>
+</div>
