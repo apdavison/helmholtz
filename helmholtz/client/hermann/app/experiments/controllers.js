@@ -29,9 +29,15 @@ function DetailExperiment($scope, $routeParams, Experiment, People, Preparation,
     });
 }
 
-function EditExperiment($scope, $http, $routeParams, Experiment, People ) 
+function EditExperiment($scope, $http, $routeParams, Experiment, People, Preparation, Animal ) 
 {
-    DetailExperiment($scope, $routeParams, Experiment, People );
+    DetailExperiment($scope, $routeParams, Experiment, People, Preparation, Animal );
+    // TODO: options read from rest
+    $scope.exp_type = [
+        {id:'1', value:'CAT VISUAL INVIVO INTRA'},
+        {id:'2', value:'CAT VISUAL INVIVO EXTRA'},
+        {id:'3', value:'CAT VISUAL INVITRO INTRA'},
+    ];
     // local update
     $scope.update = function( exp ){
         $scope.master_exp = angular.copy( exp );

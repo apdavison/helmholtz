@@ -5,14 +5,15 @@
 
 function ListAnimal( $scope, Animal )
 {
-    $scope.animal = Animal.get();
+    $scope.animal = Animal.get({uri:'preparations/animal'});
 }
 
-function DetailAnimal($scope, $routeParams, Animal, People ) 
+function DetailAnimal($scope, $routeParams, Animal, People, Strain ) 
 {
-    $scope.animal = Animal.get( {id: $routeParams.eId}, function(data){
+    var path = 'preparations/animal/'+$routeParams.uri;
+    $scope.animal = Animal.get( {uri: path}, function(data){
         // get strain
-        //$scope.strain = Strain.query();
+        $scope.strain = Strain.get({uri: $scope.animal.strain});
         // get supplier
         $scope.supplier = People.get( {uri: $scope.animal.supplier} );
         // populate form from server:
@@ -20,9 +21,14 @@ function DetailAnimal($scope, $routeParams, Animal, People )
     });
 }
 
-function EditAnimal($scope, $http, $routeParams, Animal ) 
+function EditAnimal($scope, $http, $routeParams, Animal, People, Strain ) 
 {
-    DetailAnimal($scope, $routeParams, Animal );
+    DetailAnimal($scope, $routeParams, Animal, People, Strain );
+    // defaults
+    $scope.birthCollapsed = true;
+    $scope.sacrificeCollapsed = true;
+    $scope.suppliers = People.get({uri:'people/supplier'});
+    $scope.strains = Strain.get({uri:'species/strain'});
     // local update
     $scope.update = function( entry ){
         $scope.master_entry = angular.copy( entry );

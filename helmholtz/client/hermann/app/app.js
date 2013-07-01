@@ -12,7 +12,8 @@ var base_url = 'http://helm1/';
 
 /* Main App Module */
 angular.module( 'hermann', [ 
-    //'ui.bootstrap',
+    'ui.bootstrap',
+    'hermann.directives',
     //'hermann.filters', 
     //'hermann.services',
     'hermann.login', 

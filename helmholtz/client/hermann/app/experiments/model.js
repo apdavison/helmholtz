@@ -20,7 +20,7 @@ angular.module( 'hermann.experiments', ['ngResource'] )
              templateUrl: 'experiments/detail.tpl.html', 
              controller: DetailExperiment
         })
-        .when('/experiment/edit/:eId', {
+        .when('/experiment/:eId/edit', {
              templateUrl: 'experiments/edit.tpl.html', 
              controller: EditExperiment
         })

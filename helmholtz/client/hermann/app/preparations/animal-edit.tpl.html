@@ -1,50 +1,76 @@
-<div class="container-fluid">
-    <div class="row-fluid">
-
-        <!--Body-->
-        <div class="span12">
-
-<h1>Label: {{experiment.label}}</h1>
-
 <div class="specs">
-    <form novalidate class="form-horizontal" ng-controller="EditExperiment">
+    
+    <form novalidate class="form-horizontal" ng-controller="EditAnimal">
+    
     <div class="control-group">
-        <label class="control-label" for="start">Start Date</label>
-        <div class="controls"><input id="start" type="text" ng-model="experiment.start"></div>
+        <label class="control-label" for="nickname">Nickname</label>
+        <div class="controls"><input id="nickname" type="text" ng-model="animal.nickname"></div>
     </div>
+    
     <div class="control-group">
-        <label class="control-label" for="end">End Date</label>
-        <div class="controls"><input id="end" type="text" ng-model="experiment.end"></div>
+        <label class="control-label" for="identifier">Identifier</label>
+        <div class="controls"><input id="identifier" type="text" ng-model="animal.identifier"></div>
     </div>
+    
     <div class="control-group">
-        <label class="control-label" for="type">Type</label>
-        <div class="controls"><input id="type" type="text" ng-model="experiment.type"></div>
+        <label class="control-label" for="sex">Gender</label>
+        <div class="controls">
+            <select ng-model="animal.sex" class="span1">
+                <option value="M">M</option>
+                <option value="F">F</option>
+            </select>
+        </div>
     </div>
+    
     <div class="control-group">
-        <label class="control-label" for="setup">Setup</label>
-        <div class="controls"><input id="setup" type="text"ng-model="experiment.setup"></div>
+        <label class="control-label" for="strain">Strain</label>
+        <div class="controls">
+            <select ng-model="animal.strain" ng-options="st.resource_uri as st.nomenclature for st in strains.objects">
+                <option value="">-- choose strain --</option>
+            </select>
+        </div>
     </div>
+    
     <div class="control-group">
-        <label class="control-label" for="prep">Preparation</label>
-        <div class="controls"><input id="prep" type="text" ng-model="experiment.preparation"></div>
+        <label class="control-label" for="supplier">Supplier</label>
+        <div class="controls">
+            <select ng-model="animal.supplier" ng-options="sup.resource_uri as sup.name for sup in suppliers.objects">
+                <option value="">-- choose supplier --</option>
+            </select>
+        </div>
+    </div>
+    
+    <div class="control-group">
+        <label class="control-label" for="birth">Birth</label>
+        <div class="controls">
+            <input id="birth" type="text" value="{{animal.birth|date:'dd/MM/yyyy'}}">
+            <button class="btn" ng-click="birthCollapsed=!birthCollapsed"><i class="icon-calendar"></i></button>
+            <div collapse="birthCollapsed">
+                <datepicker ng-model="animal.birth" starting-day="1" show-weeks="false"></datepicker>
+            </div>
+        </div>
+    </div>
+    
+    <div class="control-group">
+        <label class="control-label" for="birth">Sacrifice</label>
+        <div class="controls">
+            <input id="sacrifice" type="text" value="{{animal.sacrifice|date:'dd/MM/yyyy'}}">
+            <button class="btn" ng-click="sacrificeCollapsed=!sacrificeCollapsed"><i class="icon-calendar"></i></button>
+            <div collapse="sacrificeCollapsed">
+                <datepicker ng-model="animal.sacrifice" starting-day="1" show-weeks="false"></datepicker>
+            </div>
+        </div>
     </div>
 
-    <span>Researchers</span>
-    <dl ng-repeat="r in researchers">
-      <dt>User URI</dt><dd>{{r.user}}</dd>
-      <dt>Notes</dt><dd>{{r.notes}}</dd>
-    </dl>
     <div class="control-group">
         <button ng-click="reset()" class="btn">Cancel</button>
-        <button ng-click="update(experiment)" class="btn">Save</button>
-        <button ng-click="delete(experiment)" class="btn btn-danger">Delete</button>
+        <button ng-click="update(animal)" class="btn">Save</button>
+        <button ng-click="delete(animal)" class="btn btn-danger">Delete</button>
     </div>
+    
     </form>
-    <!--
-    -->
-    <pre>local = {{experiment | json}}</pre>
-    <pre>master = {{master_exp | json}}</pre>
+
+    <pre>local = {{animal | json}}</pre>
+    <pre>master = {{master_entry | json}}</pre>
 </div>
 
-    </div>
-</div>

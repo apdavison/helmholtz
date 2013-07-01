@@ -17,11 +17,11 @@ angular.module( 'hermann.preparations', ['ngResource'] )
              controller: ListAnimal
         })
         .when('/preparations/animal/:uri', {
-             templateUrl: 'preparations/animal-detail.tpl.html', 
+             templateUrl: 'preparations/animal-comp-detail.tpl.html', 
              controller: DetailAnimal
         })
-        .when('/preparations/animal/edit/:uri', {
-             templateUrl: 'preparations/animal-edit.tpl.html', 
+        .when('/preparations/animal/:uri/edit', {
+             templateUrl: 'preparations/animal-comp-edit.tpl.html', 
              controller: EditAnimal
         })
     }
@@ -51,6 +51,18 @@ angular.module( 'hermann.preparations', ['ngResource'] )
             get: { method: 'GET', params:{ format:'json' }, isArray: false },
             save: { method: 'POST', params:{ format:'json' }, headers:{ 'Content-Type':'application/json' } },
             del: { method: 'DELETE', params:{ format:'json' }, headers:{ 'Content-Type':'application/json' } },
+        });
+    }
+)
+
+// even if the strain is under species, we can put it here
+// (ore everywhere else for what angularjs is concerned)
+.factory( 
+    'Strain', // Object model
+    function( $resource ){ // , $filter can be added if ngFilter is injected above
+        return $resource( base_url + ':uri', { uri:'@uri' },
+        {
+            get: { method: 'GET', params:{ format:'json' }, isArray: false },
         });
     }
 )

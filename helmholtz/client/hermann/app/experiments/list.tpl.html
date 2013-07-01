@@ -5,13 +5,15 @@
         <div class="span12">
             <table class="table table-striped table-condensed">
                 <thead>
-                    <tr><th>Label</th><th>Start</th><th>End</th><th>Type</th></tr>
+                    <tr><th></th><th>Label</th><th>Start</th><th>End</th><th>Type</th><th></th></tr>
                 </thead>
                 <tr ng-repeat="exp in experiment.objects | filter:query | orderBy:orderProp">
+                    <td style="width: 18px"><a class="btn btn-mini" href="#{{exp.resource_uri}}/edit"><i class="icon-pencil"></i></a></td>
                     <td><a href="#{{exp.resource_uri}}">{{exp.label}}</a></td>
                     <td>{{exp.start}}</td>
                     <td>{{exp.end}}</td>
                     <td>{{exp.type}}</td>
+                    <td style="width: 18px"><a class="btn btn-mini" href="#{{exp.resource_uri}}/remove"><i class="icon-remove"></i></a></td>
                 </tr>
             </table>
         </div>

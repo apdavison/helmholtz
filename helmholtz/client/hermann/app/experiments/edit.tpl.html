@@ -4,10 +4,14 @@
         <!--Body-->
         <div class="span12">
 
-<h1>Label: {{experiment.label}}</h1>
+<h1>Edit Experiment</h1>
 
 <div class="specs">
     <form novalidate class="form-horizontal" ng-controller="EditExperiment">
+    <div class="control-group">
+        <label class="control-label" for="label">Label</label>
+        <div class="controls"><input id="label" type="text" ng-model="experiment.label"></div>
+    </div>
     <div class="control-group">
         <label class="control-label" for="start">Start Date</label>
         <div class="controls"><input id="start" type="text" ng-model="experiment.start"></div>
@@ -18,7 +22,9 @@
     </div>
     <div class="control-group">
         <label class="control-label" for="type">Type</label>
-        <div class="controls"><input id="type" type="text" ng-model="experiment.type"></div>
+        <div class="controls">
+            <open-select class="" options="exp_type" model="experiment.type" click-callback="experiment.type=value"></open-select>
+        </div>
     </div>
     <div class="control-group">
         <label class="control-label" for="setup">Setup</label>

@@ -5,13 +5,15 @@
         <div class="span12">
             <table class="table table-striped table-condensed">
                 <thead>
-                    <tr><th>Nickname</th><th>Identifier</th><th>Birth</th><th>Sacrifice</th></tr>
+                    <tr><th></th><th>Nickname</th><th>Identifier</th><th>Birth</th><th>Sacrifice</th><th></th></tr>
                 </thead>
                 <tr ng-repeat="item in animal.objects | filter:query | orderBy:orderProp">
+                    <td style="width:18px"><a class="btn btn-mini" href="#{{item.resource_uri}}/edit"><i class="icon-pencil"></i></a></td>
                     <td><a href="#{{item.resource_uri}}">{{item.nickname || "unknown"}}</a></td>
                     <td>{{item.identifier}}</td>
                     <td>{{item.birth}}</td>
                     <td>{{item.sacrifice}}</td>
+                    <td style="width:18px"><a class="btn btn-mini" href="#{{item.resource_uri}}/remove"><i class="icon-remove"></i></a></td>
                 </tr>
             </table>
         </div>

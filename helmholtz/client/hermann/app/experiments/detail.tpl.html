@@ -5,8 +5,8 @@
         <div class="span12">
 
 <h1>Experiment: {{experiment.label}}</h1>
-<ul class="specs">
-  <li class="span5">
+<ul class="specs span12">
+  <li class="span6">
     <span>Info</span>
     <dl class="dl-horizontal">
       <dt>Start</dt><dd>{{experiment.start}}</dd>
@@ -15,7 +15,7 @@
       <dt>Setup</dt><dd>{{experiment.setup}}</dd>
     </dl>
   </li>
-  <li class="span5">
+  <li class="span6">
     <span>Researchers</span>
     <dl class="dl-horizontal" ng-repeat="r in researchers">
       <dt>User URI</dt><dd>{{r.user}}</dd>
@@ -25,18 +25,8 @@
   </li>
 </ul>
 
-<ul class="specs">
-  <li class="span5">
-    <span>Animal</span>
-    <dl class="dl-horizontal">
-      <dt>Strain</dt><dd>{{animal.strain}}</dd>
-      <dt>Identifier</dt><dd>{{animal.identifier}}</dd>
-      <dt>Sex</dt><dd>{{animal.sex}}</dd>
-      <dt>Birth</dt><dd>{{animal.birth}}</dd>
-      <dt>Sacrifice</dt><dd>{{animal.sacrifice}}</dd>
-    </dl>
-  </li>
-</ul>
+<h2>Animal</h2>
+<ng-include src="'preparations/animal-detail.tpl.html'"></ng-include>
 
         </div>
     </div>
