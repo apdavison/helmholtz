@@ -25,50 +25,6 @@ class Animal( models.Model ) :
     sacrifice = models.DateField( null=True, blank=True )
     supplier = models.ForeignKey( Supplier, null=True, blank=True ) 
     
-    def get_birth(self, age):
-        """
-        Get the date of birth of the :class:`Animal`
-        from an age in days and its sacrifice date.
-        """
-        assert self.sacrifice, 'sacrifice property unknown'
-        delta = datetime.timedelta(age)
-        return self.sacrifice - delta
-    
-    def set_birth(self, age, sacrifice):
-        """
-        Set the birth date of the :class:`Animal`
-        from a sacrifice date and an age.
-        """
-        delta = datetime.timedelta(age)
-        self.birth = sacrifice - delta
-        self.save()
-    
-    def get_sacrifice(self, age): 
-        """
-        Get the date of sacrifice of the :class:`Animal`
-        from an age and its birth date.
-        """
-        assert self.birth, 'birth property unknown'
-        delta = datetime.timedelta(age)
-        return self.birth + delta    
-    
-    def set_sacrifice(self, age, birth):
-        """
-        Set the sacrifice date of the :class:`Animal`
-        from a birth date and an age.
-        """
-        delta = datetime.timedelta(age)
-        self.sacrifice = birth + delta
-        self.save()
-    
-    def _age(self):
-        """Age of the :class:`Animal` in weeks."""
-        if self.sacrifice and self.birth:
-            return round((self.sacrifice - self.birth).days / 7.0, 1)
-        else:
-            return None
-    age = property(_age)
-    
     def __unicode__(self):
         st = ''
         if self.identifier :
@@ -77,16 +33,13 @@ class Animal( models.Model ) :
             if self.identifier :
                 st += ', '
             st += "%s" % (self.strain)
-        if self.sex :
-            st += ', ' + self.get_sex_display() 
-        age = self._age()
-        if age :
-            st += ', %s weeks' % age
         return st 
         
     class Meta:
         ordering = ['-sacrifice']
-
+        permissions = (
+            ( 'view_animal', 'View Animal' ),
+        )
 
 
 preparations = (
@@ -112,23 +65,3 @@ class Preparation( models.Model ):
     def __unicode__(self):
         cast = self.cast()
         return u"%s, %s" % (self.type, self.animal)
-    
-    def subclass(self):
-        cast = self.cast()
-        return cast.__class__._meta.verbose_name
-    
-    def get_weights(self):
-        """Get all measured weights."""
-        preparation_type = ContentType.objects.get_for_model(self)
-        return GenericMeasurement.objects.filter(parameter__label='weight',
-                                                 content_type=preparation_type,
-                                                 object_id=self.id)
-    
-    def get_weight_at_sacrifice(self):
-        """Get measured weight at sacrifice."""
-        one_hour = datetime.timedelta(0, 3600)
-        weights = self.get_weights().filter(timestamp__gte=self.animal.sacrifice - one_hour)
-        if weights.count() > 0:
-            return weights[weights.count() - 1]
-        else:
-            return None

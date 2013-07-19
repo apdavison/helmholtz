@@ -152,14 +152,16 @@ INSTALLED_APPS = (
 )
 
 # THIRD-PARTY
+# tastypie
 # to add jsonp, used in cross-site requests
 TASTYPIE_DEFAULT_FORMATS = [ 'json', 'jsonp', 'xml', 'yaml' ]
 TASTYPIE_ALLOW_MISSING_SLASH = True
-
+# guardian
 AUTHENTICATION_BACKENDS = {
     'django.contrib.auth.backends.ModelBackend', # this is the default
     'guardian.backends.ObjectPermissionBackend',
 }
+ANONYMOUS_USER_ID = -1
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
