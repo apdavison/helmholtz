@@ -36,10 +36,10 @@ class Animal( models.Model ) :
         return st 
         
     class Meta:
-        ordering = ['-sacrifice']
         permissions = (
-            ( 'view_animal', 'View Animal' ),
+            ( 'view_animal', 'Can view animal' ),
         )
+        ordering = ['-sacrifice']
 
 
 preparations = (

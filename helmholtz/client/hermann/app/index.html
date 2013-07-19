@@ -30,7 +30,7 @@
         <div class="navbar-inner">
             <div class="container">
                 <a class="brand" href="#">Hermann</a>
-                <div class="nav-collapse collapse">
+                <div class="nav-collapse collapse" ng-show="showLogout">
                     <ul class="nav">
                         <li><a href="#/experiment">Experiments</a></li>
                         <li><a href="#/preparations/animal">Animals</a></li>
@@ -39,7 +39,7 @@
                         <li><a href="#/storage">Storage</a></li>
                     </ul>
                     <div class="pull-right" ng-show="showLogout">
-                        <button class="btn btn-mini btn-inverse" ng-click="removeAuthorization()">Logout</a>
+                        <button class="btn btn-mini btn-inverse" ng-click="removeAuthorization()">Logout {{username}}</a>
                     </div>
                     <div class="navbar-search pull-right">
                         <input type="text" class="search-query" placeholder="Filter" ng-model="query">
@@ -50,6 +50,12 @@
     </div>
 
     <div ng-view></div>
+
+    <div modal="showSpin" options="opts"><i class="icon-edit"></i></div>
+
+<div class="span12">
+<pre>showSpin = {{showSpin}}</pre>
+</div>
 
 </body>
 </html>

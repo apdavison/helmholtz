@@ -2,8 +2,11 @@
 
 from tastypie.authentication import Authentication, BasicAuthentication
 from tastypie.authorization import Authorization, DjangoAuthorization
+
 from tastypie.resources import ModelResource, ALL, ALL_WITH_RELATIONS
 from tastypie import fields
+
+from helmholtz.core.authorization import GuardianAuthorization
 
 from helmholtz.preparations.models import Animal
 from helmholtz.preparations.models import Preparation
@@ -30,7 +33,14 @@ class AnimalResource( ModelResource ) :
         }
         allowed_methods = [ 'get', 'post', 'put', 'delete', 'patch' ]
         authentication = BasicAuthentication()
-        authorization = DjangoAuthorization()
+        authorization = GuardianAuthorization(
+            view_permission_code = 'view_animal',
+            create_permission_code = 'add_animal',
+            update_permission_code = 'change_animal',
+            delete_permission_code = 'delete_animal'
+        )
+        #authorization = DjangoAuthorization()
+
 
 
 class PreparationResource( ModelResource ) :
