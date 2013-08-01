@@ -45,88 +45,6 @@ class Organization( HierarchicalStructure ) :
             complete_path = u"%s%s%s" % (self.parent.__unicode__(separator=separator), separator, complete_path)
         return complete_path
     
-    @property
-    def manager(self):
-        """Return the manager a of the :class:`Organization` instance."""
-        positions = self.position_set.filter(position_type__name="manager")
-        return positions.latest('start').researcher if positions else None
-    
-    def _years(self):
-        """Age of the :class:`Organization` instance in years."""
-        today = date.today()
-        _end = self.dissolution_date or today
-        if self.foundation_date :
-            return int(round((_end - self.foundation_date).days / 365.25))
-        else:
-            return None
-    years = property(_years)
-    
-    def get_main_and_sub_structures(self):
-        _main = self.get_root()
-        _sub = self if (_main != self) else None
-        return _main, _sub
-    
-    def create_diminutive(self, separator="_"):
-        """
-        Return an auto generated diminutive from the
-        name of the :class:`Organization` instance.
-        """
-        if not self.diminutive:
-            self.diminutive = self.name.replace(" ", separator)
-    
-    @property
-    def researchers(self):
-        """
-        Return :class:`django.contrib.auth.models.Researchers`
-        instances corresponding to the :class:`Organization`
-        instance and its children.
-        """
-        structures = list()
-        structures.append(self)
-        structures.extend(self.get_children(True, False))
-        researchers = Researcher.objects.filter(position__structure__in=structures).order_by('last_name','first_name').distinct()
-        return researchers
-    
-    @property
-    def structures(self):
-        return self.get_children(True, True)
-    
-    @property
-    def experiments(self):
-        """
-        Return :class:`Experiment` instances provided
-        by the :class:`Organization` instance.
-        """
-        q1 = models.Q(setup__place__parent=self)
-        q2 = models.Q(setup__place=self)
-        cls = get_class('experiment', 'Experiment')
-        return cls.objects.filter(q1 | q2).distinct()
-    
-    def number_of_researchers(self):
-        """
-        Get the number of :class:`Researcher` instances
-        working in the :class:`Organization` instance.
-        """
-        aggregate = self.position_set.all().aggregate(Count("researcher", distinct=True))
-        count = aggregate["researcher__count"]
-        if self.organization_set.count :
-            for children in self.get_children(recursive=False) :
-                count += children.number_of_researchers()
-        return count
-    
-    def get_groups(self, recursive=False):
-        """
-        Return :class:`django.contrib.auth.models.Group`
-        instances corresponding to the :class:`Organization`
-        instance and its children.
-        """
-        groups = list()
-        groups.append(self.db_group.name)
-        if recursive :
-            groups = [k.db_group.name for k in self.get_children(recursive)]
-        return Group.objects.filter(name__in=groups)
-    
-    
 
 class Researcher( models.Model ):
     """
@@ -145,66 +63,13 @@ class Researcher( models.Model ):
     
     def __unicode__(self):
         st = "%s %s" % ( self.user.first_name, self.user.last_name )
-        st += "%s %s %s" % ( self.postal_code, self.town, self.state )
-        if self.state :
-            st += " (%s)" % self.country
         return st  
     
-    def get_full_name(self):
-        """
-        Get the full name of the :class:`Researcher` instance, 
-        i.e. the combination between its first and last names.
-        """
-        return "%s %s" % (self.first_name, self.last_name)
-    
-    def position_in_structure(self, structure):
-        """
-        Return the latest :class:`Position` of the 
-        :class:`Researcher` instance for the specified
-        :class:`Organization`.
-        """
-        structures = list()
-        structures.append(structure)
-        structures.extend(structure.get_children(True, False))
-        positions = self.position_set.filter(structure__in=structures)
-        position = positions.latest('start') if positions else None
-        return position
-    
-    def current_position(self):
-        """
-        Return the current :class:`Position` of the 
-        :class:`Researcher` instance.
-        """
-        today = date.today()
-        last_position = self.last_position()
-        if last_position :
-            if not last_position.end or ((last_position.start <= today) and (last_position.end >= today)) :
-                return last_position
-        return None
-    
-    def last_position(self, structure=None):
-        """
-        Return the last effective :class:`Position` of
-        the :class:`Researcher` instance in the specified
-        :class:`Organization`.
-        """
-        if structure :
-            structures = list()
-            structures.append(structure)
-            structures.extend(structure.get_children(True, False))
-            positions = self.position_set.filter(structure__in=structures)
-        else :
-            positions = self.position_set.all()
-        return positions.latest("start") if positions else None
-    
-    def number_of_structures(self):
-        """
-        Get the number of :class:`Organization`
-        where a :class:`Researcher` has worked.
-        """
-        aggregate = self.position_set.all().aggregate(Count("structure", distinct=True))
-        return aggregate["structure__count"]
-    
+    class Meta:
+        permissions = (
+            ( 'view_researcher', 'Can view researcher' ),
+        )
+
  
 
 class Position( models.Model ) :
@@ -249,7 +114,6 @@ class Supplier(models.Model):
         if self.state :
             st += " (%s)" % self.country
         return st  
-    
     
     class Meta:
         ordering = ['name']

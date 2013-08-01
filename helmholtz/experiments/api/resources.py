@@ -5,6 +5,8 @@ from tastypie.authorization import Authorization, DjangoAuthorization
 from tastypie.resources import ModelResource, ALL, ALL_WITH_RELATIONS
 from tastypie import fields
 
+from helmholtz.core.authorization import GuardianAuthorization
+
 from helmholtz.experiments.models import Experiment
 
 # Allowed resources
@@ -30,5 +32,5 @@ class ExperimentResource( ModelResource ) :
         }
         allowed_methods = [ 'get', 'post', 'put', 'delete', 'patch' ]
         authentication = BasicAuthentication()
-        authorization = DjangoAuthorization()
-        #trailing_slash = False
+        #authorization = DjangoAuthorization()
+        authorization = GuardianAuthorization()

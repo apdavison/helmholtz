@@ -50,3 +50,7 @@ class Experiment( models.Model ) :
 
     class Meta:
         ordering = ['-start', 'label']
+        permissions = (
+            ( 'view_experiment', 'Can view experiment' ),
+        )
+

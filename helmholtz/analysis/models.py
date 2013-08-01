@@ -34,7 +34,7 @@ class Step( models.Model ):
     def __unicode__(self):
         st = "%s producing %s" % ( self.algorithm, self.outputs )
         if self.inputs :
-            st += " applied on $s" % ( self.input )
+            st += " applied on $s" % ( self.inputs )
         return st
 
 
@@ -44,5 +44,11 @@ class Image( models.Model ):
     caption = models.TextField( null=True, blank=True )
     
     def __unicode__(self):
-        st = "%s (algorithm: %s) [file:%s]" % ( self.caption, self.generator.algorithm, self.file.location )
+        st = "%s (algorithm: %s)" % ( self.caption, self.generator.algorithm )
         return st
+
+    class Meta:
+        permissions = (
+            ( 'view_image', 'Can view image' ),
+        )
+

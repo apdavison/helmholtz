@@ -33,13 +33,8 @@ class AnimalResource( ModelResource ) :
         }
         allowed_methods = [ 'get', 'post', 'put', 'delete', 'patch' ]
         authentication = BasicAuthentication()
-        authorization = GuardianAuthorization(
-            view_permission_code = 'view_animal',
-            create_permission_code = 'add_animal',
-            update_permission_code = 'change_animal',
-            delete_permission_code = 'delete_animal'
-        )
         #authorization = DjangoAuthorization()
+        authorization = GuardianAuthorization()
 
 
 

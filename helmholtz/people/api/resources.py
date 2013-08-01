@@ -9,6 +9,8 @@ from tastypie.authorization import Authorization, DjangoAuthorization
 from tastypie.resources import ModelResource, ALL, ALL_WITH_RELATIONS
 from tastypie import fields
 
+from helmholtz.core.authorization import GuardianAuthorization
+
 from helmholtz.people.models import Organization
 from helmholtz.people.models import Researcher
 from helmholtz.people.models import Position
@@ -69,7 +71,8 @@ class ResearcherResource( ModelResource ) :
         }
         allowed_methods = [ 'get', 'post', 'put', 'delete', 'patch' ]
         authentication = BasicAuthentication()
-        authorization = DjangoAuthorization()
+        #authorization = DjangoAuthorization()
+        authorization = GuardianAuthorization()
 
 
 class PositionResource( ModelResource ) :

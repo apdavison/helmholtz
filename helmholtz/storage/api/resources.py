@@ -5,6 +5,8 @@ from tastypie.authorization import Authorization, DjangoAuthorization
 from tastypie.resources import ModelResource, ALL, ALL_WITH_RELATIONS
 from tastypie import fields
 
+from helmholtz.core.authorization import GuardianAuthorization
+
 from helmholtz.storage.models import CommunicationProtocol
 from helmholtz.storage.models import MimeType
 from helmholtz.storage.models import FileServer
@@ -90,4 +92,5 @@ class FileResource( ModelResource ) :
         }
         allowed_methods = [ 'get', 'post', 'put', 'delete', 'patch' ]
         authentication = BasicAuthentication()
-        authorization = DjangoAuthorization()
+        #authorization = DjangoAuthorization()
+        authorization = GuardianAuthorization()

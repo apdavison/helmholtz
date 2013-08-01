@@ -63,5 +63,4 @@ class Preparation( models.Model ):
     notes = generic.GenericRelation( Measurement, verbose_name="observations", content_type_field='content_type', object_id_field='object_id' )
     
     def __unicode__(self):
-        cast = self.cast()
         return u"%s, %s" % (self.type, self.animal)

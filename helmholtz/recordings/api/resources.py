@@ -5,6 +5,8 @@ from tastypie.authorization import Authorization, DjangoAuthorization
 from tastypie.resources import ModelResource, ALL, ALL_WITH_RELATIONS
 from tastypie import fields
 
+from helmholtz.core.authorization import GuardianAuthorization
+
 from helmholtz.recordings.models import Block
 from helmholtz.recordings.models import Recording
 from helmholtz.recordings.models import Segment
@@ -53,7 +55,8 @@ class RecordingResource( ModelResource ) :
         }
         allowed_methods = [ 'get', 'post', 'put', 'delete', 'patch' ]
         authentication = BasicAuthentication()
-        authorization = DjangoAuthorization()
+        #authorization = DjangoAuthorization()
+        authorization = GuardianAuthorization()
 
 
 class SegmentResource( ModelResource ) :

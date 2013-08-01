@@ -8,6 +8,8 @@ from tastypie.resources import ModelResource, ALL, ALL_WITH_RELATIONS
 from tastypie import fields
 from tastypie.contrib.contenttypes.fields import GenericForeignKeyField
 
+from helmholtz.core.authorization import GuardianAuthorization
+
 from helmholtz.analysis.models import DataSource
 from helmholtz.analysis.models import Step
 from helmholtz.analysis.models import Image
@@ -41,9 +43,9 @@ class DataSourceResource( ModelResource ) :
         filtering = {
             'object' : ALL_WITH_RELATIONS,
         }
+        allowed_methods = [ 'get', 'post', 'put', 'delete', 'patch' ]
         authentication = BasicAuthentication()
         authorization = DjangoAuthorization()
-        allowed_methods = [ 'get', 'post', 'put', 'delete', 'patch' ]
 
 
 class StepResource( ModelResource ) :
@@ -58,9 +60,9 @@ class StepResource( ModelResource ) :
             'outputs' : ALL_WITH_RELATIONS,
             'algorithm' : ALL,
         }
+        allowed_methods = [ 'get', 'post', 'put', 'delete', 'patch' ]
         authentication = BasicAuthentication()
         authorization = DjangoAuthorization()
-        allowed_methods = [ 'get', 'post', 'put', 'delete', 'patch' ]
 
 
 class ImageResource( ModelResource ) :
@@ -74,6 +76,7 @@ class ImageResource( ModelResource ) :
             'file' : ALL_WITH_RELATIONS,
             'caption' : ALL,
         }
-        authentication = BasicAuthentication()
-        authorization = DjangoAuthorization()
         allowed_methods = [ 'get', 'post', 'put', 'delete', 'patch' ]
+        authentication = BasicAuthentication()
+        #authorization = DjangoAuthorization()
+        authorization = GuardianAuthorization()

@@ -41,6 +41,11 @@ class Recording( models.Model ) :
     def __unicode__(self):
         return "Recording '%s'" % (self.name)
     
+    class Meta:
+        permissions = (
+            ( 'view_recording', 'Can view recording' ),
+        )
+
 
 class Segment( models.Model ) :
     """
