@@ -8,7 +8,7 @@ from tastypie.resources import ModelResource, ALL, ALL_WITH_RELATIONS
 from tastypie import fields
 from tastypie.contrib.contenttypes.fields import GenericForeignKeyField
 
-from helmholtz.core.authorization import GuardianAuthorization
+from helmholtz.core.api.authorization import GuardianAuthorization
 
 from helmholtz.analysis.models import DataSource
 from helmholtz.analysis.models import Step

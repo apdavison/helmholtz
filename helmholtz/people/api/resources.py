@@ -9,7 +9,7 @@ from tastypie.authorization import Authorization, DjangoAuthorization
 from tastypie.resources import ModelResource, ALL, ALL_WITH_RELATIONS
 from tastypie import fields
 
-from helmholtz.core.authorization import GuardianAuthorization
+from helmholtz.core.api.authorization import GuardianAuthorization
 
 from helmholtz.people.models import Organization
 from helmholtz.people.models import Researcher

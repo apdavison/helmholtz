@@ -5,7 +5,7 @@ from tastypie.authorization import Authorization, DjangoAuthorization
 from tastypie.resources import ModelResource, ALL, ALL_WITH_RELATIONS
 from tastypie import fields
 
-from helmholtz.core.authorization import GuardianAuthorization
+from helmholtz.core.api.authorization import GuardianAuthorization
 
 from helmholtz.storage.models import CommunicationProtocol
 from helmholtz.storage.models import MimeType
