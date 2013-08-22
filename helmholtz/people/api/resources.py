@@ -10,6 +10,7 @@ from tastypie.resources import ModelResource, ALL, ALL_WITH_RELATIONS
 from tastypie import fields
 
 from helmholtz.core.api.authorization import GuardianAuthorization
+from helmholtz.core.api.serialization import HelmholtzSerializer
 
 from helmholtz.people.models import Organization
 from helmholtz.people.models import Researcher
@@ -47,10 +48,12 @@ class UserResource( ModelResource ) :
         }
         authentication = BasicAuthentication()
         authorization = DjangoAuthorization()
+        serializer = HelmholtzSerializer()
 
 
 class ResearcherResource( ModelResource ) :
-    user = fields.ForeignKey( UserResource, 'user' )
+    #user = fields.ForeignKey( UserResource, 'user' )
+    user = fields.ForeignKey( UserResource, attribute='user', full=True )
     
     # output measurement in addition to normal fields
     #def dehydrate( self, bundle ) :
@@ -73,7 +76,7 @@ class ResearcherResource( ModelResource ) :
         authentication = BasicAuthentication()
         #authorization = DjangoAuthorization()
         authorization = GuardianAuthorization()
-
+        serializer = HelmholtzSerializer()
 
 class PositionResource( ModelResource ) :
     researcher = fields.ForeignKey( ResearcherResource, 'researcher' )
