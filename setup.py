@@ -1,30 +1,12 @@
 #!/usr/bin/env python
 
 from distutils.core import setup
+from setuptools import find_packages
 
 setup(
     name = "Helmholtz",
     version = "0.3.0dev",
-    packages = [
-                'helmholtz', 
-                #'helmholtz.access_control', 
-                'helmholtz.analysis',
-                'helmholtz.chemistry', 
-                'helmholtz.core',
-                'helmholtz.drugs', 
-                'helmholtz.devices', 
-                'helmholtz.experiments', 
-                'helmholtz.locations',
-                'helmholtz.measurements', 
-                'helmholtz.neuralstructures',
-                'helmholtz.people', 
-                'helmholtz.preparations', 
-                'helmholtz.recordings',
-                'helmholtz.species', 
-                'helmholtz.stimulations',
-                'helmholtz.storage', 
-                'helmholtz.units'
-               ],
+    packages = find_packages(),
     package_data = {},
     author = "Neuroinformatics research group, UNIC, CNRS",
     author_email = "andrew.davison@unic.cnrs-gif.fr",
