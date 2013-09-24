@@ -34,9 +34,7 @@
                     <ul class="nav">
                         <li><a href="#/experiment">Experiments</a></li>
                         <li><a href="#/preparations/animal">Animals</a></li>
-                        <li><a href="#/devices">Device</a></li>
-                        <li><a href="#/drugs">Drugs</a></li>
-                        <li><a href="#/storage">Storage</a></li>
+                        <!--<li><a href="#/devices">Device</a></li> ... -->
                     </ul>
                     <div class="pull-right" ng-show="showLogout">
                         <button class="btn btn-mini btn-inverse" ng-click="removeAuthorization()">Logout {{username}}</a>
@@ -52,10 +50,10 @@
     <div ng-view></div>
 
     <div modal="showSpin" options="opts"><i class="icon-edit"></i></div>
-
+<!--
 <div class="span12">
 <pre>showSpin = {{showSpin}}</pre>
 </div>
-
+-->
 </body>
 </html>

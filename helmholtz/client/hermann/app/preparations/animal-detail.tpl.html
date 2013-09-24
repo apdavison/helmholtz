@@ -1,12 +1,19 @@
 <ul class="specs">
   <li class="span12">
+    <span>Animal</span>
     <dl class="dl-horizontal">
-      <dt>Nickname</dt><dd>{{animal.nickname}}</dd>
-      <dt>Strain</dt><dd>{{animal.strain}}</dd>
-      <dt>Identifier</dt><dd>{{animal.identifier}}</dd>
-      <dt>Gender</dt><dd>{{animal.sex}}</dd>
-      <dt>Birth</dt><dd>{{animal.birth}}</dd>
-      <dt>Sacrifice</dt><dd>{{animal.sacrifice}}</dd>
+      <dt ng-show="animal.nickname">Nickname</dt>
+	<dd ng-show="animal.nickname">{{animal.nickname}}</dd>
+      <dt ng-show="animal.strain">Strain</dt>
+	<dd ng-show="animal.strain">{{animal.strain}}</dd>
+      <dt ng-show="animal.identifier">Identifier</dt>
+	<dd ng-show="animal.identifier">{{animal.identifier}}</dd>
+      <dt ng-show="animal.sex">Gender</dt>
+	<dd ng-show="animal.sex">{{animal.sex}}</dd>
+      <dt ng-show="animal.birth">Birth</dt>
+	<dd ng-show="animal.birth">{{animal.birth}}</dd>
+      <dt ng-show="animal.sacrifice">Sacrifice</dt>
+	<dd ng-show="animal.sacrifice">{{animal.sacrifice}}</dd>
     </dl>
   </li>
 </ul>

@@ -18,9 +18,10 @@ function DetailExperiment($scope, $routeParams, Experiment, People, Preparation,
             $scope.researchers.push( res );
         });
         // get preparation
-        var preparation = Preparation.get({uri:$scope.experiment.preparation}, function(data){
-            // when the preparation is available, get the animal
-            $scope.animal = Animal.get({uri:preparation.animal});
+        $scope.preparation = Preparation.get({uri:$scope.experiment.preparation}, function(data){
+            // when the preparation is available, get the animal and device/items
+            $scope.animal = Animal.get({uri:$scope.preparation.animal});
+            //$scope.equipment = Device.get({uri:$scope.preparation.equipment});
         });
         // get setup
         //$scope.setup = ;

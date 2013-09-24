@@ -1,0 +1,38 @@
+<ul class="specs">
+  <li class="span12">
+    <span>Preparation</span>
+    <dl class="dl-horizontal">
+      <dt ng-show="preparation.model_description">Model Description</dt>
+	<dd ng-show="preparation.model_description">{{preparation.model_description}}</dd>
+      <dt ng-show="preparation.protocol">Protocol</dt>
+	<dd ng-show="preparation.protocol">{{preparation.protocol}}</dd>
+      <dt ng-show="preparation.type">Type</dt>
+	<dd ng-show="preparation.type">{{preparation.type}}</dd>
+      <dt ng-show="preparation.bath_solution">Bath Solution</dt>
+	<dd ng-show="preparation.bath_solution">{{preparation.bath_solution}}</dd>
+      <dt ng-show="preparation.cut_orientation">Cut Orientation</dt>
+	<dd ng-show="preparation.cut_orientation">{{preparation.cut_orientation}}</dd>
+      <dt ng-show="preparation.cutting_solution">Cutting Solution</dt>
+	<dd ng-show="preparation.cutting_solution">{{preparation.cutting_solution}}</dd>
+      <dt ng-show="preparation.thickness">Thickness</dt>
+	<dd ng-show="preparation.thickness">{{preparation.thickness}}</dd>
+    </dl>
+    <dl class="dl-horizontal" ng-repeat="eq in equipment">
+      <dt ng-show="eq.label">label</dt>
+	<dd ng-show="eq.label">{{eq.label}}</dd>
+      <dt ng-show="eq.model">model</dt>
+	<dd ng-show="eq.model">{{eq.model}}</dd>
+      <dt ng-show="eq.notes">notes</dt>
+	<dd ng-show="eq.notes">{{eq.notes}}</dd>
+      <dt ng-show="eq.type">type</dt>
+	<dd ng-show="eq.type">{{eq.type}}</dd>
+      <dt ng-show="eq.version">version</dt>
+	<dd ng-show="eq.version">{{eq.version}}</dd>
+    </dl>
+  </li>
+</ul>
+
+
+
+
+
