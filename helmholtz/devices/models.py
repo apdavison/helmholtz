@@ -23,7 +23,10 @@ class Type( models.Model ):
     
     def __unicode__(self):
         return self.name
-    
+
+    def __str__(self):
+        return self.__unicode__()
+
     class Meta :
         ordering = ['name']
 
@@ -40,7 +43,7 @@ class Type( models.Model ):
     # EKG
 
 
-
+# call this "Device"?
 class Item( models.Model ):
     """
     Device that could be deployed in a :class:`Setup` :
@@ -74,11 +77,17 @@ class Item( models.Model ):
     step = models.PositiveSmallIntegerField( null=True, blank=True, verbose_name="step in mm of Multielectrode array" )
 
     def __unicode__(self):
-        st = self.model
+        st = self.label
+        if self.model:
+            st += " %s" % self.model
         if self.manufacturer :
-            st += " from %s" % (self.manufacturer)
+            st += " from %s" % (self.manufacturer,)
+        st += " <%s>" % self.type
         return st
-    
+
+    def __str__(self):
+        return self.__unicode__()
+
     class Meta :
         verbose_name_plural = 'items'
 
@@ -90,6 +99,7 @@ configurations = (
     ( 'IO', 'inside out' ),
     ( 'LO', 'loose' )
 )
+
 class ItemProperties( models.Model ):
     """
     Class for all kind of configurations making an
@@ -148,6 +158,9 @@ class ItemProperties( models.Model ):
             st += ", channel_type:'%s'" % self.channel_type
         return  st
 
+    def __str__(self):
+        return self.__unicode__()
+
 
 class RecordingPoint( models.Model ):
     """
@@ -168,6 +181,9 @@ class RecordingPoint( models.Model ):
             st += " called %s" % (self.label)
         return "%s %s of %s" % (self.__class__._meta.verbose_name, st, self.item.__unicode__())
 
+    def __str__(self):
+        return self.__unicode__()
+
 
 class SubSystem( models.Model ):
     """
@@ -180,7 +196,10 @@ class SubSystem( models.Model ):
     
     def __unicode__(self):
         return self.label
-    
+
+    def __str__(self):
+        return self.__unicode__()
+
     def get_components(self):
         """
         Return all :class:`SubSystem` instances
@@ -224,7 +243,10 @@ class Setup( models.Model ):
     
     def __unicode__(self):
         return u"%s \u2192 %s" % (self.place, self.room)
-    
+
+    def __str__(self):
+        return self.__unicode__()
+
     def get_components(self):
         """
         Return all :class:`SubSystem` instances

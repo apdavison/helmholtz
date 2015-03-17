@@ -34,7 +34,10 @@ class Animal( models.Model ) :
                 st += ', '
             st += "%s" % (self.strain)
         return st 
-        
+
+    def __str__(self):
+        return self.__unicode__()
+
     class Meta:
         permissions = (
             ( 'view_animal', 'Can view animal' ),
@@ -64,3 +67,6 @@ class Preparation( models.Model ):
     
     def __unicode__(self):
         return u"%s, %s" % (self.type, self.animal)
+
+    def __str__(self):
+        return self.__unicode__()

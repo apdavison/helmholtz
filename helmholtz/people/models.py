@@ -44,6 +44,9 @@ class Organization( HierarchicalStructure ) :
         if self.parent:
             complete_path = u"%s%s%s" % (self.parent.__unicode__(separator=separator), separator, complete_path)
         return complete_path
+
+    def __str__(self):
+        return self.__unicode__()
     
 
 class Researcher( models.Model ):
@@ -62,9 +65,15 @@ class Researcher( models.Model ):
     notes = models.TextField( null=True, blank=True )
     
     def __unicode__(self):
-        st = "%s %s" % ( self.user.first_name, self.user.last_name )
+        if self.user.last_name:
+            st = "%s %s" % ( self.user.first_name, self.user.last_name )
+        else:
+            st = self.user.username
         return st  
-    
+
+    def __str__(self):
+        return self.__unicode__()
+
     class Meta:
         permissions = (
             ( 'view_researcher', 'Can view researcher' ),
@@ -94,6 +103,8 @@ class Position( models.Model ) :
         st = u"%s, %s in %s from %s to %s" % (self.researcher, self.type, self.structure, self.start, end)
         return st
 
+    def __str__(self):
+        return self.__unicode__()
 
 
 class Supplier(models.Model):
@@ -114,6 +125,9 @@ class Supplier(models.Model):
         if self.state :
             st += " (%s)" % self.country
         return st  
-    
+
+    def __str__(self):
+        return self.__unicode__()
+
     class Meta:
         ordering = ['name']

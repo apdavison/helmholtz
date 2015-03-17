@@ -11,7 +11,10 @@ class Species(models.Model):
     
     def __unicode__(self):
         return self.english_name or self.scientific_name
-    
+
+    def __str__(self):
+        return self.__unicode__()
+
     class Meta:
         verbose_name_plural = "species"
         ordering = ['english_name']
@@ -33,3 +36,6 @@ class Strain(models.Model):
         if self.label :
             st += " (%s)" % (self.label)
         return st
+
+    def __str__(self):
+        return self.__unicode__()
