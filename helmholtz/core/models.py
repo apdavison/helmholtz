@@ -46,13 +46,13 @@ class CastQuerySet(models.query.QuerySet):
 class CastManager(models.Manager):
     """A subclass of :class:`Manager` useful to cast objects to their actual type."""
     
-    def get_query_set(self):
+    def get_queryset(self):
         """Return a :class:`CastQuerySet`."""
         return CastQuerySet(self.model, using=self._db)
     
     def cast(self, entity):
         """Return a :class:`QuerySet` containing all objects of the same specified subclass."""
-        return self.get_query_set().cast(entity)
+        return self.get_queryset().cast(entity)
 
 class Cast(models.Model):
     """An abstract class telling that an object could be casted to the leaf node of a class hierarchy."""
@@ -226,7 +226,7 @@ class IndexQuerySet(models.query.QuerySet):
 class IndexManager(models.Manager):
     """Manage the lifecycle of :class:`ObjectIndex` instances."""
     
-    def get_query_set(self):
+    def get_queryset(self):
         """Return a :class:`CTOQuerySet`."""
         return IndexQuerySet(self.model, using=self._db)
     

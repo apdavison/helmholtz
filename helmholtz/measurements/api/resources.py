@@ -4,7 +4,7 @@ import json
 from datetime import datetime
 
 from django.contrib.contenttypes.models import ContentType
-from django.conf.urls.defaults import url
+from django.conf.urls import url
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 
