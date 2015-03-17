@@ -1,5 +1,8 @@
 #encoding:utf-8
-from django.utils.encoding import force_unicode
+try:
+    from django.utils.encoding import force_unicode
+except ImportError:
+    from django.utils.encoding import force_text as force_unicode
 from django.utils.html import escape
 from django.db import models
 from itertools import chain

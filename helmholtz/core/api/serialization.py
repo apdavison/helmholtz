@@ -9,7 +9,10 @@ except ImportError:
 import re
 
 from django.utils import six
-from django.utils.encoding import force_unicode
+try:
+    from django.utils.encoding import force_unicode
+except ImportError:
+    from django.utils.encoding import force_text as force_unicode
 
 from tastypie.bundle import Bundle
 

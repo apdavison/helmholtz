@@ -8,6 +8,8 @@ from django.contrib.contenttypes import generic
 #from helmholtz.stimulations.models import Stimulus
 from helmholtz.storage.models import File
 
+# maybe "DataSource" is not the right name, as these can also be end-of-chain outputs from analyses,
+# e.g. figures, papers
 class DataSource( models.Model ):
     """
     Class of all kind of data sources for analysis purposes.
@@ -22,7 +24,10 @@ class DataSource( models.Model ):
     #stimulus = models.ForeignKey( Stimulus, null=True, blank=True )
     
     def __unicode__(self):
-        return "DataSource: object %s (%s)" % ( self.object, self.content_type )
+        return "DataSource: <%s> %s" % (self.content_type, self.object)
+
+    def __str__(self):
+        return self.__unicode__()
 
 
 class Step( models.Model ):
@@ -32,12 +37,18 @@ class Step( models.Model ):
     parameters = models.CharField( max_length=250, null=True, blank=True )
     
     def __unicode__(self):
-        st = "%s producing %s" % ( self.algorithm, self.outputs )
-        if self.inputs :
-            st += " applied on $s" % ( self.inputs )
+        st = "%s producing %s" % ( self.algorithm, ", ".join(str(o) for o in self.outputs.all()) )
+        if self.inputs.count() :
+            st += " applied on %s" % ", ".join(str(i) for i in self.inputs.all())
         return st
 
+    def __str__(self):
+        return self.__unicode__()
 
+
+# comment by APD, 2015-01-23:
+#   remove this class? An image is essentially just a file.
+#   perhaps use the "notes" field of the File model for the caption
 class Image( models.Model ):
     generator = models.ForeignKey( Step, null=True, blank=True )
     file = models.ForeignKey( File, null=True, blank=True )
@@ -46,6 +57,9 @@ class Image( models.Model ):
     def __unicode__(self):
         st = "%s (algorithm: %s)" % ( self.caption, self.generator.algorithm )
         return st
+
+    def __str__(self):
+        return self.__unicode__()
 
     class Meta:
         permissions = (
