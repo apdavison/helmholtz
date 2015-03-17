@@ -4,9 +4,13 @@ from django.contrib import admin
 
 from guardian.admin import GuardedModelAdmin
 
-from helmholtz.recordings.models import Recording
+from helmholtz.recordings.models import Block, Recording
 
 # overriding
+
+class BlockAdmin(GuardedModelAdmin):
+    pass
+
 class RecordingAdmin( GuardedModelAdmin ) :
     fields = [
         'block',
@@ -19,4 +23,5 @@ class RecordingAdmin( GuardedModelAdmin ) :
     ]
 
 # registration
-admin.site.register( Recording, RecordingAdmin )
+admin.site.register(Block, BlockAdmin)
+admin.site.register(Recording, RecordingAdmin)
