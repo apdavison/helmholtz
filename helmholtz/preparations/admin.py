@@ -9,7 +9,11 @@ from helmholtz.preparations.models import Preparation
 
 # overriding
 class AnimalAdmin( GuardedModelAdmin ) :
-    fields = [ 'identifier', 'nickname', 'strain' ]
+    pass
+class PreparationAdmin( GuardedModelAdmin ) :
+    pass
+
 
 # registration
 admin.site.register( Animal, AnimalAdmin )
+admin.site.register( Preparation, PreparationAdmin )
