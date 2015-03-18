@@ -4,7 +4,7 @@ from django.db import models
 class Unit( models.Model ) :
     """Store the unit corresponding to a physical quantity."""
     symbol = models.CharField( max_length=16 )
-    physical_meaning = models.TextField()
+    physical_meaning = models.TextField(null=True, blank=True)
     
     def __unicode__(self):
         return self.symbol

@@ -59,7 +59,7 @@ class Preparation( models.Model ):
     protocol = models.TextField( null=True, blank=True )   
     equipment = models.ForeignKey( Item, null=True, blank=True )
     model_description = models.TextField( null=True, blank=True ) # simulation
-    thickness = models.FloatField( null=True ) # microm &mu;m
+    thickness = models.FloatField( null=True, blank=True ) # microm &mu;m
     cut_orientation = models.CharField( max_length=50, null=True, blank=True )
     cutting_solution = models.ForeignKey( Solution, related_name="is_cutting_solution_of", null=True, blank=True )
     bath_solution = models.ForeignKey( Solution, related_name="is_bath_solution_of", null=True, blank=True )

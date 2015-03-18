@@ -64,8 +64,8 @@ class Item( models.Model ):
     """
     type = models.ForeignKey( Type )
     label = models.CharField( max_length=100 )
-    model = models.CharField( max_length=20 )
-    version = models.CharField( max_length=100 )
+    model = models.CharField( max_length=20, null=True, blank=True )
+    version = models.CharField( max_length=100, null=True, blank=True )
     serial_or_id = models.CharField( max_length=50, null=True, blank=True )
     manufacturer = models.ForeignKey( Supplier, null=True, blank=True )
     notes = models.TextField( null=True, blank=True )

@@ -74,3 +74,13 @@ class Measurement( models.Model ):
     def __str__(self):
         return self.__unicode__()
 
+    def value_as_str(self):
+        if self.parameter.type == 'I' :
+            value = self.integer_value
+        elif self.parameter.type == 'F' :
+            value = self.float_value
+        elif self.parameter.type == 'S' :
+            value = self.string_value
+        elif self.parameter.type == 'B' :
+            value = self.boolean_value
+        return "%s %s" % (value, self.get_symbol())

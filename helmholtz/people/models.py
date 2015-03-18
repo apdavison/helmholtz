@@ -55,13 +55,13 @@ class Researcher( models.Model ):
     Used as a profile for a database :class:`django.contrib.auth.models.User`.
     """
     user = models.OneToOneField( User, null=True, blank=True, verbose_name="database user" )
-    phone = models.CharField( max_length=16 )
-    website = models.URLField( max_length=256 )
-    street_address = models.CharField( max_length=256 )
-    postal_code = models.CharField( max_length=10 )
-    town = models.CharField( max_length=256 )
+    phone = models.CharField( max_length=16, null=True, blank=True )
+    website = models.URLField( max_length=256, null=True, blank=True )
+    street_address = models.CharField( max_length=256, null=True, blank=True )
+    postal_code = models.CharField( max_length=10, null=True, blank=True )
+    town = models.CharField( max_length=256, null=True, blank=True )
     state = models.CharField( max_length=256, null=True, blank=True )
-    country = models.CharField( max_length=256 )
+    country = models.CharField( max_length=256, null=True, blank=True )
     notes = models.TextField( null=True, blank=True )
     
     def __unicode__(self):
@@ -110,13 +110,13 @@ class Position( models.Model ) :
 class Supplier(models.Model):
     """Supplier of resources used in a laboratory."""
     name = models.CharField(max_length=250, primary_key=True)
-    phone = models.CharField( max_length=16 )
-    website = models.URLField( max_length=256 )
-    street_address = models.CharField(max_length=256, verbose_name="address 1")
-    postal_code = models.CharField(max_length=10)
-    town = models.CharField(max_length=256)
+    phone = models.CharField( max_length=16, null=True, blank=True )
+    website = models.URLField( max_length=256, null=True, blank=True )
+    street_address = models.CharField(max_length=256, null=True, blank=True, verbose_name="address 1")
+    postal_code = models.CharField(max_length=10, null=True, blank=True)
+    town = models.CharField(max_length=256, null=True, blank=True)
     state = models.CharField(max_length=256, null=True, blank=True)
-    country = models.CharField(max_length=256)
+    country = models.CharField(max_length=256, null=True, blank=True)
     notes = models.TextField(null=True, blank=True)
     
     def __unicode__(self):
