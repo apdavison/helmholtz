@@ -256,4 +256,4 @@ if __name__ == '__main__' :
     #classes = dir_module('brainscales_db')
     #assert len(classes) == 161
     #cls = get_application_classes()
-    print cls
+
