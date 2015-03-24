@@ -11,7 +11,7 @@ from helmholtz.storage.models import File
 
 class Block( models.Model ) :
     """Split an :class:`Experiment` into several sequences of recording."""
-    experiment = models.ForeignKey( Experiment )
+    experiment = models.ForeignKey(Experiment)
     name = models.CharField( max_length=250, null=True, blank=True )
     description = models.TextField( null=True, blank=True )
     start = models.DateTimeField( null=True, blank=True )
@@ -112,8 +112,11 @@ class RecordingChannel( models.Model ) :
     name = models.CharField(max_length=250, null=True, blank=True)
     description = models.TextField( null=True, blank=True )
     file = models.ForeignKey( File, null=True, blank=True )
-    continuous_signals = models.ManyToManyField( ContinuousSignal, null=True )
+    continuous_signals = models.ManyToManyField(ContinuousSignal, null=True, blank=True)
     configuration = models.ForeignKey( ItemProperties, null=True )
 
     def __unicode__(self):
         return "Recording Channel '%s'" % (self.name)
+
+    def __str__(self):
+        return self.__unicode__()

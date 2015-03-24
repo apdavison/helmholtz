@@ -9,12 +9,16 @@ from helmholtz.units.fields import PhysicalQuantityField
 #from helmholtz.units.fields import ArrayToStringField
 
 
+# comment by APD: the type is already defined by the sub-class, no? Can't we just put this in the Meta class?
 class Type( models.Model ) :
     """Stimulation Type"""
     name = models.CharField( max_length=100, primary_key=True )
 
     def __unicode__(self):
        return self.name
+
+    def __str__(self):
+        return self.__unicode__()
 
 
 class Stimulus( Cast ) :
@@ -36,7 +40,10 @@ class Stimulus( Cast ) :
         if self.type :
             st += ", type:'%s'" % self.type.name
         return st
-    
+
+    def __str__(self):
+        return self.__unicode__()
+
     class Meta:
         verbose_name_plural = 'stimuli'
 
@@ -163,3 +170,21 @@ class DriftingGrating( Stimulus ):
     size_min = PhysicalQuantityField(unit='%',null=True,blank=True)
     size_max = PhysicalQuantityField(unit='%',null=True,blank=True)
     do_blank = models.NullBooleanField(null=True,blank=True)
+
+
+class TernaryDenseNoise(Stimulus):
+    luminance_high = PhysicalQuantityField(unit='Cd/m&sup2;', null=True, blank=True)
+    luminance_background = PhysicalQuantityField(unit='Cd/m&sup2;', null=True, blank=True)
+    luminance_low = PhysicalQuantityField(unit='Cd/m&sup2;', null=True, blank=True)
+
+    class Meta:
+        verbose_name = 'ternary dense noise'
+
+
+class SparseNoise(Stimulus):
+    luminance_high = PhysicalQuantityField(unit='Cd/m&sup2;', null=True, blank=True)
+    luminance_background = PhysicalQuantityField(unit='Cd/m&sup2;', null=True, blank=True)
+    luminance_low = PhysicalQuantityField(unit='Cd/m&sup2;', null=True, blank=True)
+
+    class Meta:
+        verbose_name = 'sparse noise'

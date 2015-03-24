@@ -83,9 +83,9 @@ class PhysicalQuantityWidget(forms.MultiWidget):
     """
     def __init__(self, attrs=None, initial_unit=None):
         self.initial_unit = initial_unit
-        widgets = (forms.TextInput(attrs=attrs['left'] if attrs.has_key('left') else None),
-                   forms.TextInput(attrs=attrs['right'] if attrs.has_key('right') else None))
-        super(PhysicalQuantityWidget, self).__init__(widgets, attrs['all'] if attrs.has_key('all') else None)
+        widgets = (forms.TextInput(attrs=attrs['left'] if 'left' in attrs else None),
+                   forms.TextInput(attrs=attrs['right'] if 'right' in attrs else None))
+        super(PhysicalQuantityWidget, self).__init__(widgets, attrs['all'] if 'all' in attrs     else None)
 
     def value_from_datadict(self, data, files, name):
         values = super(PhysicalQuantityWidget, self).value_from_datadict(data, files, name)

@@ -29,6 +29,9 @@ class DataSource( models.Model ):
     def __str__(self):
         return self.__unicode__()
 
+    def generated_by(self):
+        return Step.objects.filter(outputs=self.pk)
+
 
 class Step( models.Model ):
     inputs = models.ManyToManyField( DataSource, related_name='inputs', null=True, blank=True )
