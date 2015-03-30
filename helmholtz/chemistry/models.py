@@ -18,7 +18,10 @@ class Substance( models.Model ):
     def __unicode__(self):
         return u"%s" % (self.name)
     shortname = property(__unicode__)
-    
+
+    def __str__(self):
+        return self.__unicode__()
+
     class Meta:
         ordering = ['name']
 
@@ -40,7 +43,10 @@ class Product( models.Model ):
     
     def __unicode__(self):
         return self.name
-    
+
+    def __str__(self):
+        return self.__unicode__()
+
     class Meta : 
         unique_together = (("name", "supplier"),)
 
@@ -57,7 +63,10 @@ class Solution( models.Model ):
 
     def __unicode__(self):
         return self.label
-    
+
+    def __str__(self):
+        return self.__unicode__()
+
     def enumerate_components(self):
         """Return a string enumerating components of the :class:`Solution` instance."""
         components = [k.__unicode__() for k in self.quantityofsubstance.all()]
@@ -89,3 +98,6 @@ class QuantityOfSubstance( models.Model ):
     
     def __unicode__(self):
         return "%s %s mol/L" % (self.chemical_product, self.concentration)
+
+    def __str__(self):
+        return self.__unicode__()

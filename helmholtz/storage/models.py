@@ -4,6 +4,7 @@ from django.db import models
 
 from helmholtz.core.shortcuts import find_file
 
+
 class CommunicationProtocol(models.Model):
     """Existing communication protocols."""
     name = models.TextField(primary_key=True)
@@ -12,14 +13,19 @@ class CommunicationProtocol(models.Model):
     def __unicode__(self):
         return self.initials
 
+
 class MimeType(models.Model):
     """Existing type of :class:`File`."""
     extension = models.CharField(primary_key=True, max_length=8)
     name = models.CharField(max_length=32)
     
-    def __unicode__(self):
+    def __unicode__(self, *args):
         return self.name
     shortname = property(__unicode__)
+
+    def __str__(self):
+        return self.__unicode__(self)
+
 
 class FileServer(models.Model):
     """Physical storage where a :class:`File` could be stored."""
@@ -38,9 +44,13 @@ class FileServer(models.Model):
     
     def __unicode__(self):
         return self.label
-    
+
+    def __str__(self):
+        return self.__unicode__()
+
     class Meta:
         ordering = ['protocol', 'ip_address', 'port']
+
 
 class FileLocation(models.Model):
     """Path on a :class:`FileServer` where a :class:`File` is located."""
@@ -69,9 +79,13 @@ class FileLocation(models.Model):
     
     def __unicode__(self):
         return self.url
+
+    def __str__(self):
+        return self.__unicode__()
     
     class Meta:
         ordering = ['server', 'root', 'path']
+
 
 class File(models.Model) :
     """File containing data."""
@@ -93,6 +107,9 @@ class File(models.Model) :
     
     def __unicode__(self):
         return self.filename
+
+    def __str__(self):
+        return self.__unicode__()
     
     class Meta:
         permissions = (

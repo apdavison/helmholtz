@@ -8,3 +8,6 @@ class Unit( models.Model ) :
     
     def __unicode__(self):
         return self.symbol
+
+    def __str__(self):
+        return self.__unicode__()

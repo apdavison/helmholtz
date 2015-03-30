@@ -14,7 +14,10 @@ class BrainRegion( HierarchicalStructure ) :
     
     def __unicode__(self):
         return self.name
-    
+
+    def __str__(self):
+        return self.__unicode__()
+
     @property
     def name_or_abbreviation(self):
         return self.abbreviation if self.abbreviation else self.name
@@ -29,6 +32,9 @@ class CellType( models.Model ):
     
     def __unicode__(self):
         return self.name
+
+    def __str__(self):
+        return self.__unicode__()
 
 
 class Cell( models.Model ):

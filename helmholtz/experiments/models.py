@@ -31,7 +31,10 @@ class Experiment( models.Model ) :
     
     def __unicode__(self):
         return self.label if self.label else self.pk
-    
+
+    def __str__(self):
+        return self.__unicode__()
+
     @property
     def duration(self):
         """Return the duration of the :class:`Experiment` instance."""

@@ -1,7 +1,7 @@
 # people/api.py
 
 from django.contrib.auth.models import User
-from django.conf.urls.defaults import url
+from django.conf.urls import url
 from django.contrib.contenttypes.models import ContentType
 
 from tastypie.authentication import Authentication, BasicAuthentication

@@ -31,7 +31,8 @@ class Parameter( models.Model ):
     def __unicode__(self):
         return self.label
 
-
+    def __str__(self):
+        return self.__unicode__()
 
 class Measurement( models.Model ):
     """
@@ -70,4 +71,6 @@ class Measurement( models.Model ):
             value = self.boolean_value
         return "%s(%s):%s %s at %s on object %s" % (self.parameter.label, self.parameter.type, value, self.unit, self.timestamp, self.object)
 
+    def __str__(self):
+        return self.__unicode__()
 
