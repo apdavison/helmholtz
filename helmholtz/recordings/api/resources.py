@@ -22,8 +22,9 @@ from helmholtz.storage.api.resources import FileResource
 
 
 # Resources
-class BlockResource( ModelResource ) :
-    experiment = fields.ForeignKey( ExperimentResource, 'experiment' )
+class BlockResource(ModelResource):
+    experiment = fields.ForeignKey(ExperimentResource, 'experiment')
+    recordings = fields.ToManyField('helmholtz.recordings.api.resources.RecordingResource', 'recording_set', null=True)
     class Meta:
         queryset = Block.objects.all()
         resource_name = 'block' # optional, if not present it will be generated from classname

@@ -15,10 +15,11 @@ from helmholtz.devices.api.resources import SetupResource
 from helmholtz.preparations.api.resources import PreparationResource
 
 # Resources
-class ExperimentResource( ModelResource ) :
-    setup = fields.ForeignKey( SetupResource, 'setup' )
-    researchers = fields.ToManyField( ResearcherResource, 'researchers' )
-    preparation = fields.ForeignKey( PreparationResource, 'preparation', null=True )
+class ExperimentResource(ModelResource) :
+    setup = fields.ForeignKey(SetupResource, 'setup')
+    researchers = fields.ToManyField(ResearcherResource, 'researchers')
+    preparation = fields.ForeignKey(PreparationResource, 'preparation', null=True)
+    blocks = fields.ToManyField('helmholtz.recordings.api.resources.BlockResource', 'block_set', null=True)
     class Meta:
         queryset = Experiment.objects.all()
         resource_name = 'experiment'
