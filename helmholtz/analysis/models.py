@@ -26,6 +26,7 @@ class DataSource( models.Model ):
 
 
 class Step( models.Model ):
+    """Class that links many input and output DataSources with an algorithm and parameters."""
     inputs = models.ManyToManyField( DataSource, related_name='inputs', null=True, blank=True )
     outputs = models.ManyToManyField( DataSource, related_name='outputs', null=True, blank=True )
     algorithm = models.CharField( max_length=100 )

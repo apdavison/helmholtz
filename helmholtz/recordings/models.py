@@ -110,6 +110,7 @@ class RecordingChannel( models.Model ) :
     description = models.TextField( null=True, blank=True )
     file = models.ForeignKey( File, null=True, blank=True )
     continuous_signals = models.ManyToManyField( ContinuousSignal, null=True )
+    # discrete_signals = models.ManyToManyField( DiscreteSignal, null=True )
     configuration = models.ForeignKey( ItemProperties, null=True )
 
     def __unicode__(self):
