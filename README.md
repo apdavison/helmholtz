@@ -13,7 +13,7 @@ To improve this situation requires tools that make it easier for neuroscientists
 Here we present Helmholtz, an open-source framework for developing databases that are customized to the needs of individual neurophysiology labs, named after the 19th century physicist and physiologist `Hermann Ludwig Ferdinand von Helmholtz` for his work on perception.
 
 The tension between immediate benefit in having a better tool for scientists to manage their own data and longer-term considerations of sharing with others has several implications:
-	* the metadata stored should be **customizable**, since the needs of different labs can vary widely, but there should also be a common core to ensure interoperability if the data are published
+    * the metadata stored should be **customizable**, since the needs of different labs can vary widely, but there should also be a common core to ensure interoperability if the data are published
     * we should support storing both **raw and processed/analyzed data**, so that the scientist can manage all phases of their workflow and so that the provenance of an individual result or graph can be easily tracked
     * the same tool should be usable both as both **local and public resource**
     * both data and metadata should have **fine-grained** and **easy-to-use** access controls
